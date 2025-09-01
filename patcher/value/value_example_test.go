@@ -3,9 +3,9 @@ package value_test
 import (
 	"fmt"
 
-	"github.com/expr-lang/expr"
-	"github.com/expr-lang/expr/patcher/value"
-	"github.com/expr-lang/expr/vm"
+	"github.com/guamoko995/expr-cls"
+	"github.com/guamoko995/expr-cls/patcher/value"
+	"github.com/guamoko995/expr-cls/TO_REMOVE_vm"
 )
 
 type myInt struct {

@@ -8,16 +8,16 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/expr-lang/expr/internal/testify/assert"
-	"github.com/expr-lang/expr/internal/testify/require"
-	"github.com/expr-lang/expr/types"
+	"github.com/guamoko995/expr-cls/internal/testify/assert"
+	"github.com/guamoko995/expr-cls/internal/testify/require"
+	"github.com/guamoko995/expr-cls/types"
 
-	"github.com/expr-lang/expr"
-	"github.com/expr-lang/expr/ast"
-	"github.com/expr-lang/expr/checker"
-	"github.com/expr-lang/expr/conf"
-	"github.com/expr-lang/expr/parser"
-	"github.com/expr-lang/expr/test/mock"
+	"github.com/guamoko995/expr-cls"
+	"github.com/guamoko995/expr-cls/ast"
+	"github.com/guamoko995/expr-cls/checker"
+	"github.com/guamoko995/expr-cls/conf"
+	"github.com/guamoko995/expr-cls/parser"
+	"github.com/guamoko995/expr-cls/test/mock"
 )
 
 func TestCheck(t *testing.T) {

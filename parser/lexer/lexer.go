@@ -6,8 +6,8 @@ import (
 	"strings"
 	"unicode/utf8"
 
-	"github.com/expr-lang/expr/file"
-	"github.com/expr-lang/expr/internal/ring"
+	"github.com/guamoko995/expr-cls/file"
+	"github.com/guamoko995/expr-cls/internal/ring"
 )
 
 const ringChunkSize = 10

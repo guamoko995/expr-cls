@@ -6,16 +6,16 @@ import (
 	"reflect"
 	"time"
 
-	"github.com/expr-lang/expr/ast"
-	"github.com/expr-lang/expr/builtin"
-	"github.com/expr-lang/expr/checker"
-	"github.com/expr-lang/expr/compiler"
-	"github.com/expr-lang/expr/conf"
-	"github.com/expr-lang/expr/file"
-	"github.com/expr-lang/expr/optimizer"
-	"github.com/expr-lang/expr/parser"
-	"github.com/expr-lang/expr/patcher"
-	"github.com/expr-lang/expr/vm"
+	vm "github.com/guamoko995/expr-cls/TO_REMOVE_vm"
+	"github.com/guamoko995/expr-cls/ast"
+	"github.com/guamoko995/expr-cls/builtin"
+	"github.com/guamoko995/expr-cls/checker"
+	"github.com/guamoko995/expr-cls/compiler"
+	"github.com/guamoko995/expr-cls/conf"
+	"github.com/guamoko995/expr-cls/file"
+	"github.com/guamoko995/expr-cls/optimizer"
+	"github.com/guamoko995/expr-cls/parser"
+	"github.com/guamoko995/expr-cls/patcher"
 )
 
 // Option for configuring config.

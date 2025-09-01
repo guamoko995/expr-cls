@@ -17,9 +17,9 @@ import (
 	"unicode"
 	"unicode/utf8"
 
-	"github.com/expr-lang/expr/internal/spew"
+	"github.com/guamoko995/expr-cls/internal/spew"
 
-	"github.com/expr-lang/expr/internal/difflib"
+	"github.com/guamoko995/expr-cls/internal/difflib"
 )
 
 //go:generate sh -c "cd ../_codegen && go build && cd - && ../_codegen/_codegen -output-package=assert -template=assertion_format.go.tmpl"

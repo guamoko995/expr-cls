@@ -5,14 +5,14 @@ import (
 	"testing"
 	"time"
 
-	"github.com/expr-lang/expr/internal/testify/require"
+	vm "github.com/guamoko995/expr-cls/TO_REMOVE_vm"
+	"github.com/guamoko995/expr-cls/internal/testify/require"
 
-	"github.com/expr-lang/expr"
-	"github.com/expr-lang/expr/checker"
-	"github.com/expr-lang/expr/compiler"
-	"github.com/expr-lang/expr/conf"
-	"github.com/expr-lang/expr/parser"
-	"github.com/expr-lang/expr/vm"
+	"github.com/guamoko995/expr-cls"
+	"github.com/guamoko995/expr-cls/checker"
+	"github.com/guamoko995/expr-cls/compiler"
+	"github.com/guamoko995/expr-cls/conf"
+	"github.com/guamoko995/expr-cls/parser"
 )
 
 func TestTime(t *testing.T) {

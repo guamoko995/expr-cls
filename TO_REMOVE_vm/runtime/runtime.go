@@ -7,7 +7,7 @@ import (
 	"math"
 	"reflect"
 
-	"github.com/expr-lang/expr/internal/deref"
+	"github.com/guamoko995/expr-cls/internal/deref"
 )
 
 func Fetch(from, i any) any {

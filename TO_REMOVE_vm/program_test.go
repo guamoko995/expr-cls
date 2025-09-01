@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/expr-lang/expr/vm"
+	vm "github.com/guamoko995/expr-cls/TO_REMOVE_vm"
 )
 
 func TestProgram_Disassemble(t *testing.T) {

@@ -1,7 +1,7 @@
 package optimizer
 
 import (
-	. "github.com/expr-lang/expr/ast"
+	. "github.com/guamoko995/expr-cls/ast"
 )
 
 type filterFirst struct{}

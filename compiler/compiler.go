@@ -6,15 +6,15 @@ import (
 	"reflect"
 	"regexp"
 
-	"github.com/expr-lang/expr/ast"
-	"github.com/expr-lang/expr/builtin"
-	"github.com/expr-lang/expr/checker"
-	. "github.com/expr-lang/expr/checker/nature"
-	"github.com/expr-lang/expr/conf"
-	"github.com/expr-lang/expr/file"
-	"github.com/expr-lang/expr/parser"
-	. "github.com/expr-lang/expr/vm"
-	"github.com/expr-lang/expr/vm/runtime"
+	. "github.com/guamoko995/expr-cls/TO_REMOVE_vm"
+	"github.com/guamoko995/expr-cls/TO_REMOVE_vm/runtime"
+	"github.com/guamoko995/expr-cls/ast"
+	"github.com/guamoko995/expr-cls/builtin"
+	"github.com/guamoko995/expr-cls/checker"
+	. "github.com/guamoko995/expr-cls/checker/nature"
+	"github.com/guamoko995/expr-cls/conf"
+	"github.com/guamoko995/expr-cls/file"
+	"github.com/guamoko995/expr-cls/parser"
 )
 
 const (

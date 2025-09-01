@@ -5,7 +5,7 @@ import (
 	"testing"
 	"unsafe"
 
-	"github.com/expr-lang/expr/internal/testify/assert"
+	"github.com/guamoko995/expr-cls/internal/testify/assert"
 )
 
 type ignoreTestingT struct{}

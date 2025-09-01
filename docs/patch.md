@@ -25,9 +25,9 @@ func (FooPatcher) Visit(node *ast.Node) {
 }
 ```
 
-We used the [ast.Patch](https://pkg.go.dev/github.com/expr-lang/expr/ast#Patch) function to replace the `foo` variable with an integer node.
+We used the [ast.Patch](https://pkg.go.dev/github.com/guamoko995/expr-cls/ast#Patch) function to replace the `foo` variable with an integer node.
 
-Now we can use the `FooPatcher` to modify the expression on compilation via the [expr.Patch](https://pkg.go.dev/github.com/expr-lang/expr#Patch) option:
+Now we can use the `FooPatcher` to modify the expression on compilation via the [expr.Patch](https://pkg.go.dev/github.com/guamoko995/expr-cls#Patch) option:
 
 ```go
 program, err := expr.Compile(`foo + bar`, expr.Patch(FooPatcher{}))
@@ -86,7 +86,7 @@ func (DecimalPatcher) Visit(node *ast.Node) {
 }
 ```
 
-We used [Type()](https://pkg.go.dev/github.com/expr-lang/expr/ast#Node.Type) method to get the type of the expression node.
+We used [Type()](https://pkg.go.dev/github.com/guamoko995/expr-cls/ast#Node.Type) method to get the type of the expression node.
 The `AssignableTo` method is used to check if the type is `Decimal`. If both sides are `Decimal`, we replace the expression with a function call.
 
 The important part of this patcher is to set correct types for the nodes. As we constructed a new `CallNode`, it lacks the type information.
@@ -125,7 +125,7 @@ fmt.Println(output) // Decimal{6}
 :::info
 Expr comes with already implemented patcher that simplifies operator overloading.
 
-The `DecimalPatcher` can be replaced with the [Operator](https://pkg.go.dev/github.com/expr-lang/expr#Operator) option.
+The `DecimalPatcher` can be replaced with the [Operator](https://pkg.go.dev/github.com/guamoko995/expr-cls#Operator) option.
 
 ```go
 program, err := expr.Compile(code, expr.Env(env), expr.Operator("+", "add"))

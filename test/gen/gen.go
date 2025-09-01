@@ -8,8 +8,8 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/expr-lang/expr"
-	"github.com/expr-lang/expr/builtin"
+	"github.com/guamoko995/expr-cls"
+	"github.com/guamoko995/expr-cls/builtin"
 )
 
 var (

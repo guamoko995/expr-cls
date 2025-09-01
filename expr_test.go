@@ -11,16 +11,16 @@ import (
 	"testing"
 	"time"
 
-	"github.com/expr-lang/expr/conf"
-	"github.com/expr-lang/expr/internal/testify/assert"
-	"github.com/expr-lang/expr/internal/testify/require"
-	"github.com/expr-lang/expr/types"
-	"github.com/expr-lang/expr/vm"
+	"github.com/guamoko995/expr-cls/conf"
+	"github.com/guamoko995/expr-cls/internal/testify/assert"
+	"github.com/guamoko995/expr-cls/internal/testify/require"
+	"github.com/guamoko995/expr-cls/types"
+	"github.com/guamoko995/expr-cls/TO_REMOVE_vm"
 
-	"github.com/expr-lang/expr"
-	"github.com/expr-lang/expr/ast"
-	"github.com/expr-lang/expr/file"
-	"github.com/expr-lang/expr/test/mock"
+	"github.com/guamoko995/expr-cls"
+	"github.com/guamoko995/expr-cls/ast"
+	"github.com/guamoko995/expr-cls/file"
+	"github.com/guamoko995/expr-cls/test/mock"
 )
 
 func ExampleEval() {

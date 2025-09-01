@@ -24,15 +24,15 @@ If `code` variable for example returns a string, the compiler will return an err
 
 Expr has a few options to specify the return type:
 
-- [expr.AsBool()](https://pkg.go.dev/github.com/expr-lang/expr#AsBool) - expects the return type to be a bool.
-- [expr.AsInt()](https://pkg.go.dev/github.com/expr-lang/expr#AsInt) - expects the return type to be an int (float64,
+- [expr.AsBool()](https://pkg.go.dev/github.com/guamoko995/expr-cls#AsBool) - expects the return type to be a bool.
+- [expr.AsInt()](https://pkg.go.dev/github.com/guamoko995/expr-cls#AsInt) - expects the return type to be an int (float64,
   uint, int32, and other will be cast to int).
-- [expr.AsInt64()](https://pkg.go.dev/github.com/expr-lang/expr#AsInt64) - expects the return type to be an int64 (
+- [expr.AsInt64()](https://pkg.go.dev/github.com/guamoko995/expr-cls#AsInt64) - expects the return type to be an int64 (
   float64, uint, int32, and other will be cast to int64).
-- [expr.AsFloat64()](https://pkg.go.dev/github.com/expr-lang/expr#AsFloat64) - expects the return type to be a float64 (
+- [expr.AsFloat64()](https://pkg.go.dev/github.com/guamoko995/expr-cls#AsFloat64) - expects the return type to be a float64 (
   float32 will be cast to float64).
-- [expr.AsAny()](https://pkg.go.dev/github.com/expr-lang/expr#AsAny) - expects the return type to be anything.
-- [expr.AsKind(reflect.Kind)](https://pkg.go.dev/github.com/expr-lang/expr#AsKind) - expects the return type to be a
+- [expr.AsAny()](https://pkg.go.dev/github.com/guamoko995/expr-cls#AsAny) - expects the return type to be anything.
+- [expr.AsKind(reflect.Kind)](https://pkg.go.dev/github.com/guamoko995/expr-cls#AsKind) - expects the return type to be a
   specific kind.
 
 :::tip Warn on any
@@ -46,7 +46,7 @@ The return type of the expression is `any`. Arrays created in Expr are of type `
 an error if the return type is specified as `expr.AsInt()`. The output of the expression is `1`, which is an int, but the
 type checker will not return an error.
 
-But we can instruct the type checker to warn us if the return type is `any`. Use [`expr.WarnOnAny()`](https://pkg.go.dev/github.com/expr-lang/expr#WarnOnAny) to enable this behavior.
+But we can instruct the type checker to warn us if the return type is `any`. Use [`expr.WarnOnAny()`](https://pkg.go.dev/github.com/guamoko995/expr-cls#WarnOnAny) to enable this behavior.
 
 ```go
 program, err := expr.Compile(code, expr.AsInt(), expr.WarnOnAny())
@@ -66,7 +66,7 @@ let arr = [1, 2, 3]; int(arr[0])
 Although the compiled program is guaranteed to be terminated, some user defined functions may not be. For example, if a
 user defined function calls a remote service, we may want to pass a context to the function.
 
-This is possible via the [`WithContext`](https://pkg.go.dev/github.com/expr-lang/expr#WithContext) option.
+This is possible via the [`WithContext`](https://pkg.go.dev/github.com/guamoko995/expr-cls#WithContext) option.
 
 This option will modify function calls to include the context as the first argument (only if the function signature
 accepts a context).
@@ -93,7 +93,7 @@ program, err := expr.Compile(code, expr.Env(env), expr.WithContext("ctx"))
 ## ConstExpr
 
 For some user defined functions, we may want to evaluate the expression at compile time. This is possible via the
-[`ConstExpr`](https://pkg.go.dev/github.com/expr-lang/expr#ConstExpr) option. 
+[`ConstExpr`](https://pkg.go.dev/github.com/guamoko995/expr-cls#ConstExpr) option. 
 
 ```go
 func fib(n int) int {
@@ -121,7 +121,7 @@ fib(x)     // will **not** be transformed and will be evaluated at runtime
 
 ## Timezone
 
-By default, the timezone is set to `time.Local`. We can change the timezone via the [`Timezone`](https://pkg.go.dev/github.com/expr-lang/expr#Timezone) option.
+By default, the timezone is set to `time.Local`. We can change the timezone via the [`Timezone`](https://pkg.go.dev/github.com/guamoko995/expr-cls#Timezone) option.
 
 ```go
 program, err := expr.Compile(code, expr.Timezone(time.UTC))

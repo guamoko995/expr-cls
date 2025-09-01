@@ -1,11 +1,11 @@
-module github.com/expr-lang/expr/repl
+module github.com/guamoko995/expr-cls/repl
 
 go 1.20
 
 require (
 	github.com/bettercap/readline v0.0.0-20210228151553-655e48bcb7bf
-	github.com/expr-lang/expr v1.13.0
-	github.com/expr-lang/expr/debug v0.0.0
+	github.com/guamoko995/expr-cls v1.13.0
+	github.com/guamoko995/expr-cls/debug v0.0.0
 )
 
 require (
@@ -21,6 +21,6 @@ require (
 	golang.org/x/text v0.12.0 // indirect
 )
 
-replace github.com/expr-lang/expr => ../
+replace github.com/guamoko995/expr-cls => ../
 
-replace github.com/expr-lang/expr/debug => ../debug
+replace github.com/guamoko995/expr-cls/debug => ../debug

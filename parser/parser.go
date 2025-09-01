@@ -8,14 +8,14 @@ import (
 	"strconv"
 	"strings"
 
-	. "github.com/expr-lang/expr/ast"
-	"github.com/expr-lang/expr/builtin"
-	"github.com/expr-lang/expr/conf"
-	"github.com/expr-lang/expr/file"
-	"github.com/expr-lang/expr/parser/lexer"
-	. "github.com/expr-lang/expr/parser/lexer"
-	"github.com/expr-lang/expr/parser/operator"
-	"github.com/expr-lang/expr/parser/utils"
+	. "github.com/guamoko995/expr-cls/ast"
+	"github.com/guamoko995/expr-cls/builtin"
+	"github.com/guamoko995/expr-cls/conf"
+	"github.com/guamoko995/expr-cls/file"
+	"github.com/guamoko995/expr-cls/parser/lexer"
+	. "github.com/guamoko995/expr-cls/parser/lexer"
+	"github.com/guamoko995/expr-cls/parser/operator"
+	"github.com/guamoko995/expr-cls/parser/utils"
 )
 
 type arg byte

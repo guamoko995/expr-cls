@@ -5,10 +5,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/expr-lang/expr/internal/testify/assert"
-	"github.com/expr-lang/expr/internal/testify/require"
+	"github.com/guamoko995/expr-cls/internal/testify/assert"
+	"github.com/guamoko995/expr-cls/internal/testify/require"
 
-	"github.com/expr-lang/expr"
+	"github.com/guamoko995/expr-cls"
 )
 
 func TestDeref_binary(t *testing.T) {

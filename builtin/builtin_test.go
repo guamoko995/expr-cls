@@ -7,15 +7,15 @@ import (
 	"testing"
 	"time"
 
-	"github.com/expr-lang/expr/internal/testify/assert"
-	"github.com/expr-lang/expr/internal/testify/require"
+	"github.com/guamoko995/expr-cls/internal/testify/assert"
+	"github.com/guamoko995/expr-cls/internal/testify/require"
 
-	"github.com/expr-lang/expr"
-	"github.com/expr-lang/expr/builtin"
-	"github.com/expr-lang/expr/checker"
-	"github.com/expr-lang/expr/conf"
-	"github.com/expr-lang/expr/parser"
-	"github.com/expr-lang/expr/test/mock"
+	"github.com/guamoko995/expr-cls"
+	"github.com/guamoko995/expr-cls/builtin"
+	"github.com/guamoko995/expr-cls/checker"
+	"github.com/guamoko995/expr-cls/conf"
+	"github.com/guamoko995/expr-cls/parser"
+	"github.com/guamoko995/expr-cls/test/mock"
 )
 
 func TestBuiltin(t *testing.T) {
@@ -507,7 +507,7 @@ func TestBuiltin_type(t *testing.T) {
 		{func() {}, "func"},
 		{time.Now(), "time.Time"},
 		{time.Second, "time.Duration"},
-		{Foo{}, "github.com/expr-lang/expr/builtin_test.Foo"},
+		{Foo{}, "github.com/guamoko995/expr-cls/builtin_test.Foo"},
 		{struct{}{}, "struct"},
 		{a, "int"},
 	}

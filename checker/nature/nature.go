@@ -3,8 +3,8 @@ package nature
 import (
 	"reflect"
 
-	"github.com/expr-lang/expr/builtin"
-	"github.com/expr-lang/expr/internal/deref"
+	"github.com/guamoko995/expr-cls/builtin"
+	"github.com/guamoko995/expr-cls/internal/deref"
 )
 
 var (

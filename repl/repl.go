@@ -6,14 +6,14 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/expr-lang/expr/test/fuzz"
+	vm "github.com/guamoko995/expr-cls/TO_REMOVE_vm"
+	"github.com/guamoko995/expr-cls/test/fuzz"
 
 	"github.com/bettercap/readline"
 
-	"github.com/expr-lang/expr"
-	"github.com/expr-lang/expr/builtin"
-	"github.com/expr-lang/expr/debug"
-	"github.com/expr-lang/expr/vm"
+	"github.com/guamoko995/expr-cls"
+	"github.com/guamoko995/expr-cls/builtin"
+	"github.com/guamoko995/expr-cls/debug"
 )
 
 var keywords = []string{

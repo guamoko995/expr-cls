@@ -7,8 +7,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/expr-lang/expr"
-	"github.com/expr-lang/expr/internal/testify/require"
+	"github.com/guamoko995/expr-cls"
+	"github.com/guamoko995/expr-cls/internal/testify/require"
 )
 
 var updateFlag = flag.Bool("update", false, "Drop failing lines from examples.txt")

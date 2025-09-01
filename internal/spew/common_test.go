@@ -21,7 +21,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/expr-lang/expr/internal/spew"
+	"github.com/guamoko995/expr-cls/internal/spew"
 )
 
 // custom type to test Stinger interface on non-pointer receiver.

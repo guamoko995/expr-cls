@@ -26,7 +26,7 @@ func (Env) Add(a, b int) int {
 If functions are marked with [`ConstExpr`](./configuration.md#constexpr) option, they will be evaluated at compile time.
 :::
 
-The best way to define a function from a performance perspective is to use a [`Function`](https://pkg.go.dev/github.com/expr-lang/expr#Function) option.
+The best way to define a function from a performance perspective is to use a [`Function`](https://pkg.go.dev/github.com/guamoko995/expr-cls#Function) option.
 
 ```go
 atoi := expr.Function(

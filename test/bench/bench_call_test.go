@@ -3,9 +3,9 @@ package bench_test
 import (
 	"testing"
 
-	"github.com/expr-lang/expr"
-	"github.com/expr-lang/expr/internal/testify/require"
-	"github.com/expr-lang/expr/vm"
+	"github.com/guamoko995/expr-cls"
+	vm "github.com/guamoko995/expr-cls/TO_REMOVE_vm"
+	"github.com/guamoko995/expr-cls/internal/testify/require"
 )
 
 type Env struct {

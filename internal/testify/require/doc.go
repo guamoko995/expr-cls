@@ -7,7 +7,7 @@
 //
 //	import (
 //	  "testing"
-//	  "github.com/expr-lang/expr/internal/testify/require"
+//	  "github.com/guamoko995/expr-cls/internal/testify/require"
 //	)
 //
 //	func TestSomething(t *testing.T) {

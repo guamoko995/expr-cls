@@ -44,7 +44,7 @@ func (Helpers) Format(t time.Time) string {
 ```
 :::
 
-We can use an empty struct `Env{}` to with [expr.Env](https://pkg.go.dev/github.com/expr-lang/expr#Env) to create an environment. Expr will use reflection to find 
+We can use an empty struct `Env{}` to with [expr.Env](https://pkg.go.dev/github.com/guamoko995/expr-cls#Env) to create an environment. Expr will use reflection to find 
 the fields and methods of the struct.
 
 ```go
@@ -107,5 +107,5 @@ foobar         // error (unknown variable)
 :::note
 The `foobar` variable is not defined in the environment.
 By default, Expr will return an error if unknown variables are used in the expression.
-You can disable this behavior by passing [`AllowUndefinedVariables`](https://pkg.go.dev/github.com/expr-lang/expr#AllowUndefinedVariables) option to the compiler.
+You can disable this behavior by passing [`AllowUndefinedVariables`](https://pkg.go.dev/github.com/guamoko995/expr-cls#AllowUndefinedVariables) option to the compiler.
 :::

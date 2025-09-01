@@ -4,10 +4,10 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/expr-lang/expr/internal/testify/require"
+	"github.com/guamoko995/expr-cls/internal/testify/require"
 
-	"github.com/expr-lang/expr"
-	"github.com/expr-lang/expr/ast"
+	"github.com/guamoko995/expr-cls"
+	"github.com/guamoko995/expr-cls/ast"
 )
 
 func TestPatch_SetType(t *testing.T) {

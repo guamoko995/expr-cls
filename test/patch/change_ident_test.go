@@ -3,12 +3,12 @@ package patch_test
 import (
 	"testing"
 
-	"github.com/expr-lang/expr/internal/testify/require"
+	vm "github.com/guamoko995/expr-cls/TO_REMOVE_vm"
+	"github.com/guamoko995/expr-cls/internal/testify/require"
 
-	"github.com/expr-lang/expr"
-	"github.com/expr-lang/expr/ast"
-	"github.com/expr-lang/expr/vm"
-	"github.com/expr-lang/expr/vm/runtime"
+	"github.com/guamoko995/expr-cls"
+	"github.com/guamoko995/expr-cls/TO_REMOVE_vm/runtime"
+	"github.com/guamoko995/expr-cls/ast"
 )
 
 func TestPatch_change_ident(t *testing.T) {

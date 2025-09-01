@@ -4,10 +4,10 @@ import (
 	"context"
 	"testing"
 
-	"github.com/expr-lang/expr/internal/testify/require"
+	"github.com/guamoko995/expr-cls/internal/testify/require"
 
-	"github.com/expr-lang/expr"
-	"github.com/expr-lang/expr/patcher"
+	"github.com/guamoko995/expr-cls"
+	"github.com/guamoko995/expr-cls/patcher"
 )
 
 func TestWithContext(t *testing.T) {

@@ -67,7 +67,7 @@ import (
 	"testing"
 	"unsafe"
 
-	"github.com/expr-lang/expr/internal/spew"
+	"github.com/guamoko995/expr-cls/internal/spew"
 )
 
 // dumpTest is used to describe a test to be performed against the Dump method.

@@ -10,7 +10,7 @@ import (
 	"github.com/gdamore/tcell/v2"
 	"github.com/rivo/tview"
 
-	. "github.com/expr-lang/expr/vm"
+	. "github.com/guamoko995/expr-cls/TO_REMOVE_vm"
 )
 
 func StartDebugger(program *Program, env any) {

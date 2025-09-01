@@ -4,8 +4,8 @@ import (
 	"os"
 	"testing"
 
-	"github.com/expr-lang/expr"
-	"github.com/expr-lang/expr/internal/testify/require"
+	"github.com/guamoko995/expr-cls"
+	"github.com/guamoko995/expr-cls/internal/testify/require"
 )
 
 var examples []CodeBlock

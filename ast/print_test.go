@@ -3,11 +3,11 @@ package ast_test
 import (
 	"testing"
 
-	"github.com/expr-lang/expr/internal/testify/assert"
-	"github.com/expr-lang/expr/internal/testify/require"
+	"github.com/guamoko995/expr-cls/internal/testify/assert"
+	"github.com/guamoko995/expr-cls/internal/testify/require"
 
-	"github.com/expr-lang/expr/ast"
-	"github.com/expr-lang/expr/parser"
+	"github.com/guamoko995/expr-cls/ast"
+	"github.com/guamoko995/expr-cls/parser"
 )
 
 func TestPrint(t *testing.T) {

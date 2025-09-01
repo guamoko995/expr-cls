@@ -5,10 +5,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/expr-lang/expr/internal/testify/assert"
-	"github.com/expr-lang/expr/internal/testify/require"
+	"github.com/guamoko995/expr-cls/internal/testify/assert"
+	"github.com/guamoko995/expr-cls/internal/testify/require"
 
-	. "github.com/expr-lang/expr/docgen"
+	. "github.com/guamoko995/expr-cls/docgen"
 )
 
 type Tweet struct {
@@ -128,7 +128,7 @@ func TestCreateDoc(t *testing.T) {
 				},
 			},
 		},
-		PkgPath: "github.com/expr-lang/expr/docgen_test",
+		PkgPath: "github.com/guamoko995/expr-cls/docgen_test",
 	}
 
 	assert.Equal(t, expected.Markdown(), doc.Markdown())
@@ -199,7 +199,7 @@ func TestCreateDoc_Ambiguous(t *testing.T) {
 				},
 			},
 		},
-		PkgPath: "github.com/expr-lang/expr/docgen_test",
+		PkgPath: "github.com/guamoko995/expr-cls/docgen_test",
 	}
 
 	assert.Equal(t, expected.Markdown(), doc.Markdown())

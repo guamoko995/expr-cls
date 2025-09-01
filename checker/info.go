@@ -3,9 +3,9 @@ package checker
 import (
 	"reflect"
 
-	"github.com/expr-lang/expr/ast"
-	. "github.com/expr-lang/expr/checker/nature"
-	"github.com/expr-lang/expr/vm"
+	vm "github.com/guamoko995/expr-cls/TO_REMOVE_vm"
+	"github.com/guamoko995/expr-cls/ast"
+	. "github.com/guamoko995/expr-cls/checker/nature"
 )
 
 func FieldIndex(env Nature, node ast.Node) (bool, []int, string) {

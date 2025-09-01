@@ -10,11 +10,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/expr-lang/expr/builtin"
-	"github.com/expr-lang/expr/conf"
-	"github.com/expr-lang/expr/file"
-	"github.com/expr-lang/expr/internal/deref"
-	"github.com/expr-lang/expr/vm/runtime"
+	"github.com/guamoko995/expr-cls/TO_REMOVE_vm/runtime"
+	"github.com/guamoko995/expr-cls/builtin"
+	"github.com/guamoko995/expr-cls/conf"
+	"github.com/guamoko995/expr-cls/file"
+	"github.com/guamoko995/expr-cls/internal/deref"
 )
 
 func Run(program *Program, env any) (any, error) {

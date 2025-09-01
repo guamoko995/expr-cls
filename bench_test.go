@@ -3,10 +3,10 @@ package expr_test
 import (
 	"testing"
 
-	"github.com/expr-lang/expr/internal/testify/require"
+	"github.com/guamoko995/expr-cls/internal/testify/require"
+	"github.com/guamoko995/expr-cls/TO_REMOVE_vm"
 
-	"github.com/expr-lang/expr"
-	"github.com/expr-lang/expr/vm"
+	"github.com/guamoko995/expr-cls"
 )
 
 func Benchmark_expr(b *testing.B) {

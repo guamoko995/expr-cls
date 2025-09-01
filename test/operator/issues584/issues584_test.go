@@ -3,9 +3,9 @@ package issues584_test
 import (
 	"testing"
 
-	"github.com/expr-lang/expr/internal/testify/assert"
+	"github.com/guamoko995/expr-cls/internal/testify/assert"
 
-	"github.com/expr-lang/expr"
+	"github.com/guamoko995/expr-cls"
 )
 
 type Env struct{}

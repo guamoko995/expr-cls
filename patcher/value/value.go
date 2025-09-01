@@ -5,9 +5,9 @@ import (
 	"reflect"
 	"time"
 
-	"github.com/expr-lang/expr"
-	"github.com/expr-lang/expr/ast"
-	"github.com/expr-lang/expr/conf"
+	"github.com/guamoko995/expr-cls"
+	"github.com/guamoko995/expr-cls/ast"
+	"github.com/guamoko995/expr-cls/conf"
 )
 
 // ValueGetter is a Patcher that allows custom types to be represented as standard go values for use with expr.
