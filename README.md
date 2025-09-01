@@ -1,6 +1,6 @@
 ## Key Differences of This Fork
 
-The main idea of this fork is to eliminate the virtual machine and bytecode compilation used in the original [expr-lang/expr](https://github.com/guamoko995/expr-cls). Instead, expressions are compiled directly into Go functions based on closures. This approach aims to achieve deeper Go integration, potentially higher performance, and simpler debugging.
+The main idea of this fork is to eliminate the virtual machine and bytecode compilation used in the original [expr-lang/expr](https://github.com/expr-lang/expr). Instead, expressions are compiled directly into Go functions based on closures. This approach aims to achieve deeper Go integration, potentially higher performance, and simpler debugging.
 
 **Important consequences:**
 - Some specific features from the original repository may be removed or reimplemented.
@@ -9,15 +9,10 @@ The main idea of this fork is to eliminate the virtual machine and bytecode comp
 
 This project is an experimental attempt to make Expr an even more Go-native tool for dynamic expression compilation.
 
+> **Warning:** This is an experimental fork. The codebase may change significantly; security issues and bugs may be ignored or handled at the maintainer's discretion.  
+> The README below is mostly unchanged from upstream and may contain links and instructions relevant to the original repository.
+
 <h1><a href="https://expr-lang.org"><img src="https://expr-lang.org/img/logo.png" alt="Zx logo" height="48"align="right"></a> Expr</h1>
-
-> [!IMPORTANT]
-> The repository [github.com/antonmedv/expr](https://github.com/antonmedv/expr) moved to [github.com/**expr-lang**/expr](https://github.com/guamoko995/expr-cls).
-
-[![test](https://github.com/guamoko995/expr-cls/actions/workflows/test.yml/badge.svg)](https://github.com/guamoko995/expr-cls/actions/workflows/test.yml) 
-[![Go Report Card](https://goreportcard.com/badge/github.com/guamoko995/expr-cls)](https://goreportcard.com/report/github.com/guamoko995/expr-cls) 
-[![Fuzzing Status](https://oss-fuzz-build-logs.storage.googleapis.com/badges/expr.svg)](https://bugs.chromium.org/p/oss-fuzz/issues/list?sort=-opened&can=1&q=proj:expr)
-[![GoDoc](https://godoc.org/github.com/guamoko995/expr-cls?status.svg)](https://godoc.org/github.com/guamoko995/expr-cls)
 
 **Expr** is a Go-centric expression language designed to deliver dynamic configurations with unparalleled accuracy, safety, and speed. 
 **Expr** combines simple [syntax](https://expr-lang.org/docs/language-definition) with powerful features for ease of use:
@@ -67,12 +62,12 @@ Here are its standout features:
 * **Built-in Functions**: Functions like `all`, `none`, `any`, `one`, `filter`, and `map` are provided out-of-the-box.
 
 ### Performance
-* **Optimized for Speed**: Expr stands out in its performance, utilizing an optimizing compiler and a bytecode virtual machine. Check out these [benchmarks](https://github.com/antonmedv/golang-exp[...)
+* **Optimized for Speed**: Expr stands out in its performance, utilizing an optimizing compiler and a bytecode virtual machine. Check out these [benchmarks](https://github.com/antonmedv/golang-expression-evaluation-comparison#readme) for more details.
 
 ## Install
 
 ```
-go get github.com/guamoko995/expr-cls
+go get github.com/expr-lang/expr
 ```
 
 ## Documentation
@@ -89,7 +84,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/guamoko995/expr-cls"
+	"github.com/expr-lang/expr"
 )
 
 func main() {
@@ -122,7 +117,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/guamoko995/expr-cls"
+	"github.com/expr-lang/expr"
 )
 
 type Tweet struct {
@@ -184,10 +179,10 @@ func main() {
 * [WunderGraph Cosmo](https://github.com/wundergraph/cosmo) - GraphQL Federeration Router uses Expr to customize Middleware behaviour
 * [SOLO](https://solo.one) uses Expr interally to allow dynamic code execution with custom defined functions.
 
-[Add your company too](https://github.com/guamoko995/expr-cls/edit/master/README.md)
+[Add your company too](https://github.com/expr-lang/expr/edit/master/README.md)
 
 ## License
 
-[MIT](https://github.com/guamoko995/expr-cls/blob/master/LICENSE)
+[MIT](https://github.com/expr-lang/expr/blob/master/LICENSE)
 
 <p align="center"><img src="https://expr-lang.org/img/gopher-small.png" width="150" /></p>
