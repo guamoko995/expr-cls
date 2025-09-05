@@ -66,19 +66,15 @@ func Benchmark(b *testing.B) {
 
 	// Benchmark the custom-built AST-based solution.
 	b.Run("concept", func(b *testing.B) {
-		b.ResetTimer()
-		for range b.N {
+		for b.Loop() {
 			conceptProg()
 		}
-		b.StopTimer()
 	})
 
 	// Benchmark the external library's compilation approach.
 	b.Run("expr", func(b *testing.B) {
-		b.ResetTimer()
-		for range b.N {
+		for b.Loop() {
 			exprRun()
 		}
-		b.StopTimer()
 	})
 }
