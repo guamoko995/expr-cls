@@ -9,10 +9,53 @@ The main idea of this fork is to eliminate the virtual machine and bytecode comp
 
 This project is an experimental attempt to make Expr an even more Go-native tool for dynamic expression compilation.
 
-> **Warning:** This is an experimental fork. The codebase may change significantly; security issues and bugs may be ignored or handled at the maintainer's discretion.  
-> The README below is mostly unchanged from upstream and may contain links and instructions relevant to the original repository.
+---
+
+## Benchmark: Go-native AST vs expr-lang/expr
+
+As an early demonstration of this fork’s core idea, a microbenchmark was conducted comparing two approaches to expression evaluation:
+
+1. **Go-native AST + closures:** The expression is manually assembled as a tree of closures (no reflect or VM in runtime).
+2. **expr-lang/expr:** The expression is parsed from a string and evaluated using the upstream library.
+
+**Test expression:**  
+`X + (6 * Y)`  
+where `X` is a constant and `Y` is a pointer.
+
+**Benchmark results:**
+```text
+expression: "X+(6*Y)"
+params:
+	X=3
+	*Y=5
+concept result: 33
+expr result: 33
+
+goos: linux
+goarch: amd64
+pkg: github.com/guamoko995/expr-cls/proof_of_concept
+cpu: AMD Ryzen 5 5600H with Radeon Graphics         
+Benchmark/concept-12         	100000000	        10.17 ns/op	       0 B/op	       0 allocs/op
+Benchmark/expr-12            	 5918732	       201.9 ns/op	     144 B/op	       7 allocs/op
+PASS
+ok  	github.com/guamoko995/expr-cls/proof_of_concept	2.434s
+```
+
+**Explanation:**  
+- The Go-native approach (`concept`) achieves an order-of-magnitude faster execution (~10 ns vs ~200 ns per call) and zero allocations.
+- Both approaches yield the same result, demonstrating correctness and the performance potential of direct Go compilation.
+
+> **Note:** This is a proof-of-concept. The fork will eventually implement its own parser, lexer, and feature set analogous to expr, but the numbers above show the viability of the architecture.
+
+**See the actual benchmark source:**  
+[proof_of_concept/poc_bench_test.go](./proof_of_concept/poc_bench_test.go)
+
+---
 
 <h1><a href="https://expr-lang.org"><img src="https://expr-lang.org/img/logo.png" alt="Zx logo" height="48"align="right"></a> Expr</h1>
+
+> **Warning:** This is an experimental fork. The codebase may change significantly; security issues and bugs may be ignored or handled at the maintainer's discretion.  
+> The README below is mostly unchanged from upstream and may contain links and instructions relevant to the original repository.
 
 **Expr** is a Go-centric expression language designed to deliver dynamic configurations with unparalleled accuracy, safety, and speed. 
 **Expr** combines simple [syntax](https://expr-lang.org/docs/language-definition) with powerful features for ease of use:
