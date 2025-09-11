@@ -41,10 +41,10 @@ func Walk(node *Node, v Visitor) {
 		for i := range n.Arguments {
 			Walk(&n.Arguments[i], v)
 		}
-	case *BuiltinNode:
-		for i := range n.Arguments {
-			Walk(&n.Arguments[i], v)
-		}
+	/*case *BuiltinNode:
+	for i := range n.Arguments {
+		Walk(&n.Arguments[i], v)
+	}*/
 	case *PredicateNode:
 		Walk(&n.Node, v)
 	case *PointerNode:

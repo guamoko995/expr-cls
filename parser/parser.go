@@ -9,7 +9,6 @@ import (
 	"strings"
 
 	. "github.com/guamoko995/expr-cls/ast"
-	"github.com/guamoko995/expr-cls/builtin"
 	"github.com/guamoko995/expr-cls/conf"
 	"github.com/guamoko995/expr-cls/file"
 	"github.com/guamoko995/expr-cls/parser/lexer"
@@ -546,12 +545,12 @@ func (p *Parser) parseCall(token Token, arguments []Node, checkOverrides bool) N
 	var node Node
 
 	isOverridden := false
-	if p.config != nil {
+	/*if p.config != nil {
 		isOverridden = p.config.IsOverridden(token.Value)
-	}
+	}*/
 	isOverridden = isOverridden && checkOverrides
 
-	if b, ok := predicates[token.Value]; ok && !isOverridden {
+	/*if b, ok := predicates[token.Value]; ok && !isOverridden {
 		p.expect(Bracket, "(")
 
 		// In case of the pipe operator, the first argument is the left-hand side
@@ -595,7 +594,7 @@ func (p *Parser) parseCall(token Token, arguments []Node, checkOverrides bool) N
 		if node == nil {
 			return nil
 		}
-	} else if _, ok := builtin.Index[token.Value]; ok && (p.config == nil || !p.config.Disabled[token.Value]) && !isOverridden {
+	} else /*if _, ok := builtin.Index[token.Value]; ok && (p.config == nil || !p.config.Disabled[token.Value]) && !isOverridden {
 		node = p.createNode(&BuiltinNode{
 			Name:      token.Value,
 			Arguments: p.parseArguments(arguments),
@@ -604,7 +603,7 @@ func (p *Parser) parseCall(token Token, arguments []Node, checkOverrides bool) N
 			return nil
 		}
 
-	} else {
+	} else*/{
 		callee := p.createNode(&IdentifierNode{Value: token.Value}, token.Location)
 		if callee == nil {
 			return nil

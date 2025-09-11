@@ -1,24 +1,13 @@
 package ast
 
 import (
-	"reflect"
-
-	"github.com/guamoko995/expr-cls/checker/nature"
 	"github.com/guamoko995/expr-cls/file"
-)
-
-var (
-	anyType = reflect.TypeOf(new(any)).Elem()
 )
 
 // Node represents items of abstract syntax tree.
 type Node interface {
 	Location() file.Location
 	SetLocation(file.Location)
-	Nature() nature.Nature
-	SetNature(nature.Nature)
-	Type() reflect.Type
-	SetType(reflect.Type)
 	String() string
 }
 
@@ -32,8 +21,10 @@ func Patch(node *Node, newNode Node) {
 
 // base is a base struct for all nodes.
 type base struct {
-	loc    file.Location
-	nature nature.Nature
+	loc     file.Location
+	isConst bool
+	prog    any
+	args    []any
 }
 
 // Location returns the location of the node in the source code.
@@ -44,29 +35,6 @@ func (n *base) Location() file.Location {
 // SetLocation sets the location of the node in the source code.
 func (n *base) SetLocation(loc file.Location) {
 	n.loc = loc
-}
-
-// Nature returns the nature of the node.
-func (n *base) Nature() nature.Nature {
-	return n.nature
-}
-
-// SetNature sets the nature of the node.
-func (n *base) SetNature(nature nature.Nature) {
-	n.nature = nature
-}
-
-// Type returns the type of the node.
-func (n *base) Type() reflect.Type {
-	if n.nature.Type == nil {
-		return anyType
-	}
-	return n.nature.Type
-}
-
-// SetType sets the type of the node.
-func (n *base) SetType(t reflect.Type) {
-	n.nature.Type = t
 }
 
 // NilNode represents nil.
@@ -174,14 +142,12 @@ type CallNode struct {
 	Arguments []Node // Arguments of the call.
 }
 
-// BuiltinNode represents a builtin function call.
+/*/ BuiltinNode represents a builtin function call.
 type BuiltinNode struct {
 	base
 	Name      string // Name of the builtin function. Like "len" in "len(foo)".
 	Arguments []Node // Arguments of the builtin function.
-	Throws    bool   // If true then accessing a field or array index can throw an error. Used by optimizer.
-	Map       Node   // Used by optimizer to fold filter() and map() builtins.
-}
+}//*/
 
 // PredicateNode represents a predicate.
 // Example:

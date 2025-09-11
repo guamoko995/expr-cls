@@ -178,14 +178,15 @@ func (n *CallNode) String() string {
 	return fmt.Sprintf("%s(%s)", n.Callee.String(), strings.Join(arguments, ", "))
 }
 
-func (n *BuiltinNode) String() string {
-	arguments := make([]string, len(n.Arguments))
-	for i, arg := range n.Arguments {
-		arguments[i] = arg.String()
+/*
+	func (n *BuiltinNode) String() string {
+		arguments := make([]string, len(n.Arguments))
+		for i, arg := range n.Arguments {
+			arguments[i] = arg.String()
+		}
+		return fmt.Sprintf("%s(%s)", n.Name, strings.Join(arguments, ", "))
 	}
-	return fmt.Sprintf("%s(%s)", n.Name, strings.Join(arguments, ", "))
-}
-
+*/
 func (n *PredicateNode) String() string {
 	return n.Node.String()
 }
