@@ -3,33 +3,34 @@ package env
 import (
 	"fmt"
 	"math"
-
-	"github.com/guamoko995/expr-cls/builder/makebuilder"
-	"github.com/guamoko995/expr-cls/internal/hash"
 )
 
 func (env *Env) SetDefaultConsts() {
-	defConstViaBuilderNoErr("pi",
-		makebuilder.Const(math.Pi),
-	)
-	defConstViaBuilderNoErr("phi",
-		makebuilder.Const(math.Phi),
-	)
+	defConst("pi", math.Pi)
+	defConst("phi", math.Phi)
 }
 
-func defConstViaBuilderNoErr(token string, builder ...any) {
-	if err := DefConstViaBuilder(token, Global, builder...); err != nil {
+func defConst[T any](token string, val T) {
+	if err := DefConst(token, Global, val); err != nil {
 		panic(err)
 	}
 }
 
-func DefConstViaBuilder(token string, env *Env, builder ...any) error {
-	if _, exist := env.Unares[token]; !exist {
-		return fmt.Errorf("operator %q is not supported", token)
+func DefConst[T any](token string, env *Env, val T) error {
+	if _, exist := env.UnaryBuilders[token]; exist {
+		return fmt.Errorf("token %q is reserved for operators", token)
 	}
-	for i := range builder {
 
-		env.Unares[token][hash.HashArgsByBuilder(builder[i])] = builder
+	if _, exist := env.BinaryBuilders[token]; exist {
+		return fmt.Errorf("token %q is reserved for operators", token)
+	}
+
+	if _, exist := env.FunctionBuilders[token]; exist {
+		return fmt.Errorf("token %q is reserved by function", token)
+	}
+
+	env.Consts[token] = func() T {
+		return val
 	}
 
 	return nil
