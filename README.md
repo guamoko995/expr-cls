@@ -55,10 +55,21 @@ func main() {
 Below is a comparison between `expr-cls` and [expr-lang/expr](https://github.com/expr-lang/expr):
 
 ```
-Benchmark/concept-12         134553903        8.947 ns/op        0 B/op   0 allocs/op
-Benchmark/expr-12            7743223        156.6 ns/op        136 B/op 6 allocs/op
+expression: "X+(6*Y)"
+params:
+	X=3
+	Y=5
+expr-cls result: 33
+expr result: 33
+
+goos: linux
+goarch: amd64
+pkg: github.com/guamoko995/expr-cls/benchmarks
+cpu: AMD Ryzen 5 5600H with Radeon Graphics         
+Benchmark/expr-cls-12         	134878141	         8.873 ns/op	       0 B/op	       0 allocs/op
+Benchmark/expr-12             	 7457488	       158.1 ns/op	     136 B/op	       6 allocs/op
 PASS
-ok      github.com/guamoko995/expr-cls/proof_of_concept   2.422s
+ok  	github.com/guamoko995/expr-cls/benchmarks	2.381s
 ```
 
 **Explanation:**  
