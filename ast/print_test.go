@@ -6,7 +6,6 @@ import (
 	"github.com/guamoko995/expr-cls/internal/testify/assert"
 	"github.com/guamoko995/expr-cls/internal/testify/require"
 
-	"github.com/guamoko995/expr-cls/ast"
 	"github.com/guamoko995/expr-cls/parser"
 )
 
@@ -95,6 +94,7 @@ func TestPrint(t *testing.T) {
 	}
 }
 
+/*
 func TestPrint_MemberNode(t *testing.T) {
 	node := &ast.MemberNode{
 		Node: &ast.IdentifierNode{
@@ -130,3 +130,4 @@ func TestPrint_ConstantNode(t *testing.T) {
 		})
 	}
 }
+*/

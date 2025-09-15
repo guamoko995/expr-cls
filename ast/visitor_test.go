@@ -31,7 +31,7 @@ func TestWalk(t *testing.T) {
 	assert.Equal(t, []string{"foo", "bar"}, visitor.identifiers)
 }
 
-type patcher struct{}
+/*type patcher struct{}
 
 func (p *patcher) Visit(node *ast.Node) {
 	if _, ok := (*node).(*ast.IdentifierNode); ok {
@@ -52,3 +52,4 @@ func TestWalk_patch(t *testing.T) {
 	assert.IsType(t, &ast.NilNode{}, node.(*ast.BinaryNode).Left)
 	assert.IsType(t, &ast.NilNode{}, node.(*ast.BinaryNode).Right)
 }
+*/

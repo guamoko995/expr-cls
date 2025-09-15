@@ -35,10 +35,10 @@ goos: linux
 goarch: amd64
 pkg: github.com/guamoko995/expr-cls/proof_of_concept
 cpu: AMD Ryzen 5 5600H with Radeon Graphics         
-Benchmark/concept-12         	100000000	        10.17 ns/op	       0 B/op	       0 allocs/op
-Benchmark/expr-12            	 5918732	       201.9 ns/op	     144 B/op	       7 allocs/op
+Benchmark/concept-12         	134553903	         8.947 ns/op	       0 B/op	       0 allocs/op
+Benchmark/expr-12            	 7743223	       156.6 ns/op	     136 B/op	       6 allocs/op
 PASS
-ok  	github.com/guamoko995/expr-cls/proof_of_concept	2.434s
+ok  	github.com/guamoko995/expr-cls/proof_of_concept	2.422s
 ```
 
 **Explanation:**  

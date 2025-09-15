@@ -10,7 +10,7 @@ import (
 	"github.com/guamoko995/expr-cls/internal/hash"
 )
 
-func (env *Env) SetDefaultFuncs() {
+func (env *Env) RegDefaultFuncs() {
 	defFuncViaBuilderNoErr("trim",
 		base.MakeFuncIn1Builder(strings.TrimSpace),
 		base.MakeFuncIn2Builder(strings.Trim),

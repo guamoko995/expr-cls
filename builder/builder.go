@@ -1,21 +1,29 @@
 package builder
 
 import (
+	"fmt"
+
 	"github.com/guamoko995/expr-cls/ast"
-	"github.com/guamoko995/expr-cls/parser"
+	"github.com/guamoko995/expr-cls/builder/base"
+	"github.com/guamoko995/expr-cls/builder/env"
 )
 
-type fabric struct {
-	builders map[*ast.Node]any
-}
+func Build[srcT, outT any, pSrcT *srcT](tree ast.Node, env *env.Env) (func(src srcT) outT, error) {
+	var srcC srcT
+	var pSrc pSrcT
+	pSrc = &srcC
+	fnAny, err := tree.Build(env, pSrc)
+	if err != nil {
+		return nil, err
+	}
 
-type buildNode any
+	fn, ok := fnAny.(base.LazyFunc[outT])
+	if !ok {
+		return nil, fmt.Errorf("unexpectet type result: %T", fnAny)
+	}
 
-func (fab *fabric) Visit(node *ast.Node) {
-
-}
-
-func Fabr[resultT, envT any](tree *parser.Tree) (func(envT) resultT, error) {
-
-	return nil, nil
+	return func(src srcT) outT {
+		srcC = src
+		return fn()
+	}, nil
 }

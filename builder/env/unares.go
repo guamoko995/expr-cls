@@ -7,7 +7,7 @@ import (
 	"github.com/guamoko995/expr-cls/internal/hash"
 )
 
-func (env *Env) SetDefaultUnares() {
+func (env *Env) RegDefaultUnares() {
 	defUnaryViaBuilderNoErr("not",
 		base.MakeFuncIn1Builder(func(a bool) bool { return !a }),
 	)
@@ -17,7 +17,7 @@ func (env *Env) SetDefaultUnares() {
 	)
 
 	defUnaryViaBuilderNoErr("-",
-		base.MakeFuncIn1Builder(func(a int64) int64 { return -a }),
+		base.MakeFuncIn1Builder(func(a int) int { return -a }),
 		base.MakeFuncIn1Builder(func(a float64) float64 { return -a }),
 	)
 }

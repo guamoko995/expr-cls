@@ -9,6 +9,10 @@ import (
 	"github.com/guamoko995/expr-cls/internal/hash"
 )
 
+func init() {
+	Global.RegDefaultEnv()
+}
+
 var Global = New()
 
 type Env struct {
@@ -16,7 +20,7 @@ type Env struct {
 	BinaryBuilders   map[string]map[hash.Args]base.Builder
 	FunctionBuilders map[string]map[hash.Args]base.Builder
 	Consts           map[string]base.GenericLazyFunc
-	VarBuilderMakers map[reflect.Type]anyGetVarBuildersMaker
+	BuilderMakers    map[reflect.Type]BuildersMaker
 	VarBuilders      map[reflect.Type]map[string]base.Builder
 }
 
@@ -37,16 +41,16 @@ func New() *Env {
 
 	env.Consts = make(map[string]base.GenericLazyFunc)
 
-	env.VarBuilderMakers = make(map[reflect.Type]anyGetVarBuildersMaker)
+	env.BuilderMakers = make(map[reflect.Type]BuildersMaker)
 	env.VarBuilders = make(map[reflect.Type]map[string]base.Builder)
 
 	return &env
 }
 
-func (e *Env) SetDefaultEnv() {
-	e.SetDefaultUnares()
-	e.SetDefaultBinares()
-	e.SetDefaultFuncs()
-	e.SetDefaultConsts()
-	e.SetDefaultVarTypes()
+func (e *Env) RegDefaultEnv() {
+	e.RegDefaultUnares()
+	e.RegDefaultBinares()
+	e.RegDefaultFuncs()
+	e.RegDefaultConsts()
+	e.RegDefaultVarTypes()
 }

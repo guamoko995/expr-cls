@@ -23,6 +23,17 @@ func HashArgsByFunc(fn any) Args {
 	return Args(h.Sum64())
 }
 
+func HashArgs(arg ...reflect.Type) Args {
+	h := fnv.New64()
+	for i := range arg {
+		_, err := h.Write([]byte(arg[i].String()))
+		if err != nil {
+			panic(err)
+		}
+	}
+	return Args(h.Sum64())
+}
+
 func HashArgsByBuilder(fn any) Args {
 	h := fnv.New64()
 	fnT := reflect.TypeOf(fn)

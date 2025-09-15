@@ -11,19 +11,19 @@ func Walk(node *Node, v Visitor) {
 		return
 	}
 	switch n := (*node).(type) {
-	case *NilNode:
+	//case *NilNode:
 	case *IdentifierNode:
 	case *IntegerNode:
 	case *FloatNode:
 	case *BoolNode:
 	case *StringNode:
-	case *ConstantNode:
+	//case *ConstantNode:
 	case *UnaryNode:
 		Walk(&n.Node, v)
 	case *BinaryNode:
 		Walk(&n.Left, v)
 		Walk(&n.Right, v)
-	case *ChainNode:
+	/*case *ChainNode:
 		Walk(&n.Node, v)
 	case *MemberNode:
 		Walk(&n.Node, v)
@@ -41,10 +41,10 @@ func Walk(node *Node, v Visitor) {
 		for i := range n.Arguments {
 			Walk(&n.Arguments[i], v)
 		}
-	/*case *BuiltinNode:
+	case *BuiltinNode:
 	for i := range n.Arguments {
 		Walk(&n.Arguments[i], v)
-	}*/
+	}
 	case *PredicateNode:
 		Walk(&n.Node, v)
 	case *PointerNode:
@@ -69,7 +69,7 @@ func Walk(node *Node, v Visitor) {
 		}
 	case *PairNode:
 		Walk(&n.Key, v)
-		Walk(&n.Value, v)
+		Walk(&n.Value, v)*/
 	default:
 		panic(fmt.Sprintf("undefined node type (%T)", node))
 	}

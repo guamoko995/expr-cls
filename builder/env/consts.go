@@ -5,18 +5,18 @@ import (
 	"math"
 )
 
-func (env *Env) SetDefaultConsts() {
-	defConst("pi", math.Pi)
-	defConst("phi", math.Phi)
+func (env *Env) RegDefaultConsts() {
+	regConst("pi", math.Pi)
+	regConst("phi", math.Phi)
 }
 
-func defConst[T any](token string, val T) {
-	if err := DefConst(token, Global, val); err != nil {
+func regConst[T any](token string, val T) {
+	if err := RegConst(token, Global, val); err != nil {
 		panic(err)
 	}
 }
 
-func DefConst[T any](token string, env *Env, val T) error {
+func RegConst[T any](token string, env *Env, val T) error {
 	if _, exist := env.UnaryBuilders[token]; exist {
 		return fmt.Errorf("token %q is reserved for operators", token)
 	}
