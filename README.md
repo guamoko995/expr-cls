@@ -10,7 +10,7 @@ This architecture enables extremely fast compilation and execution, zero allocat
 
 **Environment:**  
 At compile time, you define an environment describing:
-- Supported unary and binary operators for the parser (declarative, not implemented yet; currently a fixed set is used).
+- Supported unary and binary operators for the parser (not implemented yet; currently a fixed set is used).
 - Complex constructs for the parser (e.g., ternary operator, arbitrary typed literals; planned).
 - Overload registrations for unary and binary operators.
 - Overload registrations for functions.
@@ -87,9 +87,11 @@ func Example() {
 
 ## Benchmarks
 
+You can find the benchmark source in [`tests/benchmarks`](https://github.com/guamoko995/expr-cls/tree/master/tests/benchmarks).
+
 ### Compilation Speed
 
-Measures the time and resource usage to compile an expression:
+Measures the time and resource usage to compile an expression ([benchmark code](https://github.com/guamoko995/expr-cls/tree/master/tests/benchmarks)):
 
 ```
 goos: linux
@@ -107,7 +109,7 @@ ok  	github.com/guamoko995/expr-cls/tests/benchmarks	2.285s
 
 ### Evaluation Speed
 
-Measures the time and resource usage to repeatedly evaluate a compiled expression:
+Measures the time and resource usage to repeatedly evaluate a compiled expression ([benchmark code](https://github.com/guamoko995/expr-cls/tree/master/tests/benchmarks)):
 
 ```
 expression: "X+(6*Y)"
