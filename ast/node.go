@@ -263,6 +263,51 @@ type CallNode struct {
 	Arguments []Node // Arguments of the call.
 }
 
+func (n *CallNode) Build(env *env.Enviroment, varSrc any) (basepkg.GenericLazyFunc, error) {
+	ident, ok := n.Callee.(*IdentifierNode)
+	if !ok {
+		return nil, errors.New("unexpected call")
+	}
+
+	_, exist := env.Func[ident.Value]
+	if !exist {
+		return nil, fmt.Errorf("function %q not found", ident.Value)
+	}
+
+	args := make([]basepkg.GenericLazyFunc, len(n.Arguments))
+	argTypes := make([]reflect.Type, len(n.Arguments))
+	n.isConst = true
+	for i := range len(n.Arguments) {
+		if !n.Arguments[i].IsConstant() {
+			n.isConst = false
+		}
+		var err error
+		args[i], err = n.Arguments[i].Build(env, varSrc)
+		if err != nil {
+			return nil, err
+		}
+		argTypes[i] = reflect.TypeOf(args[i]).Out(0)
+	}
+
+	fn, exist := env.Func[ident.Value][hashsum.HashArgs(argTypes...)]
+	if !exist {
+		return nil, fmt.Errorf("environment does not contain implementations of the %q function for the given arguments", ident.Value)
+	}
+
+	result := fn.Build(args)
+
+	if n.IsConstant() {
+		result := reflect.ValueOf(result).Call([]reflect.Value{})[0].Interface()
+		resultTR := reflect.TypeOf(result)
+
+		if builderMaker, exist := env.VariableMakers[resultTR]; exist {
+			return builderMaker.MakeConstBuilder(result), nil
+		}
+	}
+
+	return result, nil
+}
+
 /*/ BuiltinNode represents a builtin function call.
 type BuiltinNode struct {
 	base

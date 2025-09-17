@@ -78,4 +78,9 @@ func RegisterFuncs(env *env.Enviroment) {
 		registrators.NewFuncIn2(func(x float64, y int) float64 { return math.Min(x, float64(y)) }),
 		registrators.NewFuncIn2(func(x, y int) int { return int(math.Min(float64(x), float64(y))) }),
 	)
+
+	env.RegisterFuncNoErr("sin",
+		registrators.NewFuncIn1(math.Sin),
+		registrators.NewFuncIn1(func(x int) float64 { return math.Sin(float64(x)) }),
+	)
 }

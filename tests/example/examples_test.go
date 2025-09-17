@@ -19,7 +19,7 @@ func Example() {
 	}
 
 	// Parse and compile the expression "3 + A * B".
-	prog, err := exprcls.Compile[InputData, float64]("3 + A * -B + pi")
+	prog, err := exprcls.Compile[InputData, float64]("3 + A * -B + sin(pi/2)")
 	if err != nil {
 		fmt.Println("Error:", err)
 		return
@@ -34,5 +34,5 @@ func Example() {
 	// Print the computed result.
 	fmt.Println(result)
 
-	// Output: -63.8584073464102
+	// Output: -66
 }
