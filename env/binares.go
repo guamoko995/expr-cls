@@ -6,6 +6,7 @@ import (
 	"github.com/guamoko995/expr-cls/env/registrators"
 )
 
+// RegisterBinaryNoErr calls RegisterBinary and panics on error.
 func (env *Enviroment) RegisterBinaryNoErr(token string, registrator ...registrators.Binary) {
 	if err := env.RegisterBinary(token, registrator...); err != nil {
 		panic(err)

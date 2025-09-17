@@ -34,9 +34,9 @@ func RegisterConst(token string, registrator ...registrators.Const) error {
 }
 
 func RegisterVarType(registrator ...registrators.VariableType) {
-	env.RegisterVarTypes(registrator...)
+	env.RegisterVarType(registrator...)
 }
 
 func RegisterVarSource(registrator ...registrators.VarSourse) {
-	env.RegisterVarSources(registrator...)
+	env.RegisterVarSource(registrator...)
 }

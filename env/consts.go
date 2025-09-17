@@ -6,6 +6,7 @@ import (
 	"github.com/guamoko995/expr-cls/env/registrators"
 )
 
+// RegisterConstNoErr calls RegisterConst and panics on error.
 func (env *Enviroment) RegisterConstNoErr(token string, registrator ...registrators.Const) {
 	if err := env.RegisterConst(token, registrator...); err != nil {
 		panic(err)

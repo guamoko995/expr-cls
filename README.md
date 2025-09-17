@@ -1,58 +1,113 @@
 # expr-cls
 
-**expr-cls** is a minimal MVP implementation of an expression compilation and evaluation engine, supporting custom variables, operators, and lazy evaluation.  
-**Key advantage:** evaluation speed is about 17x faster than [expr-lang/expr](https://github.com/expr-lang/expr) (see Benchmark section below).
+**expr-cls** is a minimal, experimental implementation of a high-performance string expression compiler and runtime for Go.  
+The core idea is to build expressions as chains of strictly-typed Go closures (functions), rather than interpreting bytecode on a virtual machine.  
+This architecture enables extremely fast compilation and execution, zero allocations during evaluation, and a flexible, extensible environment system.
 
-This fork introduces a new architecture, making it easy to extend functions and variable sources, and overload operators.
+---
 
-## Features (MVP Stage)
+## Key Concepts
 
-- **Custom variable sources:** Use struct fields as variables in expressions.
-- **Operator overloading:** Arithmetic and logical operators can be overloaded for custom types via builder interface (parser limitation: operators cannot be extended, only overloaded).
-- **Functions:** Built-in string and math functions, extensible with your own.
-- **Constants:** Built-in mathematical constants (`pi`, `phi`).
-- **Lazy evaluation:** Expressions compile into Go functions.
-- **Extensible environment:** Register new variable types, functions, and constants.
+**Environment:**  
+At compile time, you define an environment describing:
+- Supported unary and binary operators for the parser (declarative, not implemented yet; currently a fixed set is used).
+- Complex constructs for the parser (e.g., ternary operator, arbitrary typed literals; planned).
+- Overload registrations for unary and binary operators.
+- Overload registrations for functions.
+- Constant registrations.
+- Variable type registrations.
+- Variable source type registrations (struct fields as variables).
 
-## Quick Example
+**Extensibility:**  
+You can create separate packages with ready-made environments for domain-specific tasks (e.g., matrices, complex numbers, statistics, geospatial, etc).
+See [`example`](https://github.com/guamoko995/expr-cls/tree/master/tests/example) for a current example of environment definition and usage.
+
+**Performance:**  
+Expressions compile and execute extremely quickly at runtime.  
+Compiled expressions are strictly typed.
+
+---
+
+## Usage
 
 ```go
-package main
+package example_test
 
 import (
-    "fmt"
-    "github.com/guamoko995/expr-cls/expr"
+	"fmt"
+
+	exprcls "github.com/guamoko995/expr-cls"
+
+	// Using the example environment
+	_ "github.com/guamoko995/expr-cls/tests/example/def_env"
 )
 
-func main() {
-    // Define input structure
-    type InputData struct {
-        A int
-        B int
-    }
+// CompileAndCalcExample demonstrates how to compile and evaluate expressions
+// using the expr-cls package.
+func Example() {
+	// Define a data structure containing input variables for our expression.
+	type InputData struct {
+		A int
+		B int
+	}
 
-    // Register the struct type as a variable source
-    expr.RegisterSource[InputData]()
+	// Parse and compile the expression "3 + A * B".
+	prog, err := exprcls.Compile[InputData, int]("3 + A * -B")
+	if err != nil {
+		fmt.Println("Error:", err)
+		return
+	}
 
-    // Compile the expression
-    fn, err := expr.Compile[InputData, int]("3 + A * -B")
-    if err != nil {
-        panic(err)
-    }
+	// Provide input data for evaluating the expression.
+	input := InputData{A: 7, B: 10}
 
-    // Provide input data
-    input := InputData{A: 7, B: 10}
+	// Evaluate the expression using the provided input data.
+	result := prog(input)
 
-    // Evaluate the expression
-    result := fn(input)
+	// Print the computed result.
+	fmt.Println(result)
 
-    fmt.Println(result) // Output: -67
+	// Output: -67
 }
 ```
 
-## Benchmark
+---
 
-Below is a comparison between `expr-cls` and [expr-lang/expr](https://github.com/expr-lang/expr):
+## Features
+
+- Struct fields as variables in expressions (via registration).
+- Operator overloading for custom types (operator set is fixed by parser, not extendable yet).
+- Function overloading and custom function registration.
+- Constant registration.
+- Strict typing of compiled expressions.
+- Extremely fast compilation and evaluation (see benchmarks below).
+- MVP: Some features and built-ins from original [expr-lang/expr](https://github.com/expr-lang/expr) are disabled or not implemented.
+
+---
+
+## Benchmarks
+
+### Compilation Speed
+
+Measures the time and resource usage to compile an expression:
+
+```
+goos: linux
+goarch: amd64
+pkg: github.com/guamoko995/expr-cls/tests/benchmarks
+cpu: AMD Ryzen 5 5600H with Radeon Graphics         
+BenchmarkCompile/expr-cls-12         	  644955	      1730 ns/op	    1344 B/op	      31 allocs/op
+BenchmarkCompile/expr-12             	  110992	     10489 ns/op	   10342 B/op	      75 allocs/op
+PASS
+ok  	github.com/guamoko995/expr-cls/tests/benchmarks	2.285s
+```
+**expr-cls compiles more than 6x faster and with 8x less memory allocation than expr-lang/expr.**
+
+---
+
+### Evaluation Speed
+
+Measures the time and resource usage to repeatedly evaluate a compiled expression:
 
 ```
 expression: "X+(6*Y)"
@@ -64,66 +119,42 @@ expr result: 33
 
 goos: linux
 goarch: amd64
-pkg: github.com/guamoko995/expr-cls/benchmarks
+pkg: github.com/guamoko995/expr-cls/tests/benchmarks
 cpu: AMD Ryzen 5 5600H with Radeon Graphics         
-Benchmark/expr-cls-12         	134878141	         8.873 ns/op	       0 B/op	       0 allocs/op
-Benchmark/expr-12             	 7457488	       158.1 ns/op	     136 B/op	       6 allocs/op
+BenchmarkСalc/expr-cls-12          	134900941	         8.885 ns/op	       0 B/op	       0 allocs/op
+BenchmarkСalc/expr-12              	 7426069	       162.8 ns/op	     136 B/op	       6 allocs/op
 PASS
-ok  	github.com/guamoko995/expr-cls/benchmarks	2.381s
+ok  	github.com/guamoko995/expr-cls/tests/benchmarks	2.413s
 ```
-
-**Explanation:**  
-`expr-cls` compiles expressions directly to lazy Go functions using struct variable sources, which is extremely fast and zero-alloc for supported types. The expr-lang/expr library is, for now, more mature and universal, but slower and requires memory allocation.
-
-## Architecture Overview
-
-- **AST → Builder → LazyFunc:** Expressions are parsed to AST, then compiled to lazy-evaluated functions via builder interfaces.
-- **Environment (`env`):** Holds operator/function/constant/variable builders. Easily extendable.
-- **Operator overloading:** Operators can be overloaded for custom types, but the set of operators is fixed by the parser.
-- **Functions:** Registered via builder interfaces (`base.Builder`). Supports unary, binary, and multi-argument functions.
-- **Variables:** Use struct fields (after registration) as variable sources in expressions.
-
-### Extending the Environment
-
-You can register your own variable types, functions, and constants:
-
-```go
-import "github.com/guamoko995/expr-cls/builder/env"
-
-// Register new variable type
-env.RegVarType[MyType](env.Global)
-
-// Overload operator for custom types
-env.DefUnaryViaBuilder("myop", env.Global, myUnaryBuilder)
-
-// Register new function
-env.DefFuncViaBuilder("myfunc", env.Global, myFuncBuilder)
-
-// Register new constant
-env.RegConst("e", env.Global, math.E)
-```
-
-## Built-in Operators & Functions
-
-- Arithmetic: `+`, `-`, `*`, `/`, `%`, `**`, `^`
-- Logical: `and`, `or`, `not`, `!`
-- Comparison: `==`, `!=`, `<`, `>`, `<=`, `>=`
-- String: `trim`, `trimPrefix`, `trimSuffix`, `lower`, `split`, `splitAfter`, `replace`, `repeat`, `join`, `lastIndexOf`, `hasPrefix`, `hasSuffix`
-- Math: `max`, `min`
-- Constants: `pi`, `phi`
-
-## MVP Limitations
-
-- Only struct variable sources are supported (for now).
-- Operators cannot be extended; only overloaded for supported types.
-- Some original expr-lang/expr features and builtins are disabled or commented (see code for details).
-- Focus on performance and simplicity for the MVP.
-
-## Reference
-
-- [Proof of concept & benchmarks](proof_of_concept/poc_bench_test.go)
-- [Usage example](expr_test.go)
+**expr-cls evaluates expressions ~18x faster and with zero allocations.**
 
 ---
 
-This README reflects the new MVP architecture, usage patterns, and extensibility of **expr-cls**. Feel free to contribute or extend!
+## Architecture
+
+- **Parsing:** Expressions are parsed into AST nodes. The set of operators/constructs is currently fixed.
+- **Environment:** Holds operator/function/constant/variable builders. Easily extended. See [`example`](https://github.com/guamoko995/expr-cls/tree/master/tests/example/) for practical setup.
+- **Building:** AST is compiled into a closure chain (Go functions), not bytecode.
+- **Evaluation:** The compiled closure chain receives strictly-typed input (struct) and returns strictly-typed output.
+
+---
+
+## Extending expr-cls
+
+To see how to register types, constants, functions, and operator overloads, refer to the [`example`](https://github.com/guamoko995/expr-cls/tree/master/tests/example/).
+
+---
+
+## Limitations and Roadmap
+
+- Only struct variable sources supported (for now).
+- Operators cannot be extended (only overloaded).
+- Some complex constructs (e.g. ternary operator, custom literals) are planned but not implemented.
+- Error handling and reporting are minimal.
+- More tests and environments are planned.
+- Parser extensibility: declarative operator/construct definition is a future goal.
+
+---
+
+**This README summarizes the ideas and experimental architecture of expr-cls.  
+Feedback and contributions are welcome.**

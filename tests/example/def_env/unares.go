@@ -5,8 +5,7 @@ import (
 	"github.com/guamoko995/expr-cls/env/registrators"
 )
 
-// RegisterUnares registers default unary operators in the current
-// environment.
+// RegisterUnares registers unary operators in the environment.
 func RegisterUnares(env *env.Enviroment) {
 	env.RegisterUnaryNoErr("not",
 		registrators.NewUnary(func(a bool) bool { return !a }),

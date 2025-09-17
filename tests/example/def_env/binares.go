@@ -8,8 +8,7 @@ import (
 	"github.com/guamoko995/expr-cls/env/registrators"
 )
 
-// RegisterBinares registers default binary operators in the current
-// environment.
+// RegisterBinares registers binary operators in the environment.
 func RegisterBinares(env *env.Enviroment) {
 	env.RegisterBinaryNoErr("or",
 		registrators.NewBinary(func(a, b bool) bool { return a || b }),

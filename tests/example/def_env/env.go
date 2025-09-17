@@ -3,10 +3,11 @@ package defenv
 import "github.com/guamoko995/expr-cls/env"
 
 func init() {
-	Regster(env.DefaultEnv)
+	DefEnv(env.DefaultEnv)
 }
 
-func Regster(e *env.Enviroment) {
+// DefEnv defines the environment.
+func DefEnv(e *env.Enviroment) {
 	RegisterUnares(e)
 	RegisterBinares(e)
 	RegisterFuncs(e)

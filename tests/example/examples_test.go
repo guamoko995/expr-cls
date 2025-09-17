@@ -5,7 +5,7 @@ import (
 
 	exprcls "github.com/guamoko995/expr-cls"
 
-	// Использовать среду из примера
+	// Using the example environment
 	_ "github.com/guamoko995/expr-cls/tests/example/def_env"
 )
 

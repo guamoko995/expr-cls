@@ -6,6 +6,7 @@ import (
 	"github.com/guamoko995/expr-cls/env/registrators"
 )
 
+// RegisterUnaryNoErr calls RegisterUnary and panics on error.
 func (env *Enviroment) RegisterUnaryNoErr(token string, registrator ...registrators.Unary) {
 	if err := RegisterUnary(token, registrator...); err != nil {
 		panic(err)

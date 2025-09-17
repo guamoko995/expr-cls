@@ -8,7 +8,7 @@ import (
 	"github.com/guamoko995/expr-cls/env/registrators"
 )
 
-// RegisterFuncs registers default funcs in the current environment.
+// RegisterFuncs registers funcs in the environment.
 func RegisterFuncs(env *env.Enviroment) {
 	env.RegisterFuncNoErr("trim",
 		registrators.NewFuncIn1(strings.TrimSpace),

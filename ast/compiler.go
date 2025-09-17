@@ -14,7 +14,7 @@ func Compile[srcT, outT any, pSrcT *srcT](tree Node, e *env.Enviroment) (func(sr
 	pSrc := &srcC
 
 	if _, exist := e.Variables[reflect.TypeFor[srcT]()]; !exist {
-		env.RegisterVarSources(registrators.NewVarSourse[srcT]())
+		env.RegisterVarSource(registrators.NewVarSourse[srcT]())
 	}
 
 	fnAny, err := tree.Build(e, pSrc)

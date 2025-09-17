@@ -10,6 +10,7 @@ import (
 	"github.com/guamoko995/expr-cls/env/registrators"
 )
 
+// RegisterFuncNoErr calls RegisterFunc and panics on error.
 func (env *Enviroment) RegisterFuncNoErr(token string, registrator ...registrators.Func) {
 	for i := range registrator {
 		if err := env.RegisterFunc(token, registrator...); err != nil {
