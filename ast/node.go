@@ -66,12 +66,17 @@ type IdentifierNode struct {
 
 func (n *IdentifierNode) Build(env *env.Enviroment, varSrc any) (basepkg.GenericLazyFunc, error) {
 	srcTR := reflect.TypeOf(varSrc).Elem()
-	builder, exist := env.Variables[srcTR][n.Value]
-	if !exist {
-		return nil, fmt.Errorf("identifier %q not found", n.Value)
-	}
-	return builder.Build([]basepkg.GenericLazyFunc{unsafe.Pointer(reflect.ValueOf(varSrc).Pointer())}), nil
 
+	if builder, exist := env.Variables[srcTR][n.Value]; exist {
+		return builder.Build([]basepkg.GenericLazyFunc{unsafe.Pointer(reflect.ValueOf(varSrc).Pointer())}), nil
+	}
+
+	if builder, exist := env.Const[n.Value]; exist {
+		n.isConst = true
+		return builder.Build([]basepkg.GenericLazyFunc{}), nil
+	}
+
+	return nil, fmt.Errorf("identifier %q not found", n.Value)
 }
 
 // IntegerNode represents an integer.

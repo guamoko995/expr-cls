@@ -34,7 +34,7 @@ func (constant[T]) GetInputTypesHashSum() hashsum.Inputs {
 
 // Build forms a lazy constructor for a constant.
 func (c constant[T]) Build([]base.GenericLazyFunc) base.GenericLazyFunc {
-	return c
+	return base.LazyFunc[T](c)
 }
 
 // NewConst turns a value into a lazy constructor.
