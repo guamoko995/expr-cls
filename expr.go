@@ -1,9 +1,7 @@
-package expr
+package exprcls
 
 import (
-	"github.com/guamoko995/expr-cls/builder"
-	"github.com/guamoko995/expr-cls/builder/env"
-	buildEnv "github.com/guamoko995/expr-cls/builder/env"
+	"github.com/guamoko995/expr-cls/ast"
 	"github.com/guamoko995/expr-cls/conf"
 	"github.com/guamoko995/expr-cls/parser"
 )
@@ -20,9 +18,9 @@ func MaxNodes(n uint) Option {
 	}
 }
 
-func WithEnv(buildEnv *buildEnv.Env) Option {
+func WithEnv(Env Env) Option {
 	return func(c *conf.Config) {
-		c.WithEnv(buildEnv)
+		c.WithEnv(Env.internalEnv.Enviroment)
 	}
 }
 
@@ -38,14 +36,10 @@ func Compile[srcT, outT any](input string, ops ...Option) (func(srcT) outT, erro
 		return nil, err
 	}
 
-	res, err := builder.Build[srcT, outT](tree.Node, config.BuildStageEnvironment)
+	res, err := ast.Compile[srcT, outT](tree.Node, config.BuildStageEnvironment)
 	if err != nil {
 		return nil, err
 	}
 
 	return res, nil
-}
-
-func RegisterSource[srcT any](e ...*buildEnv.Env) {
-	env.RegVarSrc[srcT](e...)
 }

@@ -1,14 +1,14 @@
-package hash
+package hashsum
 
 import (
 	"hash/fnv"
 	"reflect"
 )
 
-type Args uint64
+type Inputs uint64
 type Type uint64
 
-func HashArgsByFunc(fn any) Args {
+func HashArgsByFunc(fn any) Inputs {
 	h := fnv.New64()
 	fnT := reflect.TypeOf(fn)
 	if fnT.Kind() != reflect.Func {
@@ -20,10 +20,10 @@ func HashArgsByFunc(fn any) Args {
 			panic(err)
 		}
 	}
-	return Args(h.Sum64())
+	return Inputs(h.Sum64())
 }
 
-func HashArgs(arg ...reflect.Type) Args {
+func HashArgs(arg ...reflect.Type) Inputs {
 	h := fnv.New64()
 	for i := range arg {
 		_, err := h.Write([]byte(arg[i].String()))
@@ -31,10 +31,10 @@ func HashArgs(arg ...reflect.Type) Args {
 			panic(err)
 		}
 	}
-	return Args(h.Sum64())
+	return Inputs(h.Sum64())
 }
 
-func HashArgsByBuilder(fn any) Args {
+func HashArgsByBuilder(fn any) Inputs {
 	h := fnv.New64()
 	fnT := reflect.TypeOf(fn)
 	if fnT.Kind() != reflect.Func {
@@ -49,7 +49,7 @@ func HashArgsByBuilder(fn any) Args {
 			panic(err)
 		}
 	}
-	return Args(h.Sum64())
+	return Inputs(h.Sum64())
 }
 
 func HashType[T any]() Type {

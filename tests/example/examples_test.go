@@ -1,11 +1,16 @@
-package expr
+package example_test
 
 import (
 	"fmt"
+
+	exprcls "github.com/guamoko995/expr-cls"
+
+	// Использовать среду из примера
+	_ "github.com/guamoko995/expr-cls/tests/example/def_env"
 )
 
-// ExampleExpr demonstrates how to build and evaluate expressions using the expr
-// package.
+// CompileAndCalcExample demonstrates how to compile and evaluate expressions
+// using the expr-cls package.
 func Example() {
 	// Define a data structure containing input variables for our expression.
 	type InputData struct {
@@ -13,11 +18,8 @@ func Example() {
 		B int
 	}
 
-	// Register the data structure in the execution environment.
-	RegisterSource[InputData]()
-
 	// Parse and compile the expression "3 + A * B".
-	fn, err := Compile[InputData, int]("3 + A * -B")
+	prog, err := exprcls.Compile[InputData, int]("3 + A * -B")
 	if err != nil {
 		fmt.Println("Error:", err)
 		return
@@ -27,7 +29,7 @@ func Example() {
 	input := InputData{A: 7, B: 10}
 
 	// Evaluate the expression using the provided input data.
-	result := fn(input)
+	result := prog(input)
 
 	// Print the computed result.
 	fmt.Println(result)

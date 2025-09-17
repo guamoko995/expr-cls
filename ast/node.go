@@ -6,10 +6,10 @@ import (
 	"reflect"
 	"unsafe"
 
-	basepkg "github.com/guamoko995/expr-cls/builder/base"
-	"github.com/guamoko995/expr-cls/builder/env"
+	"github.com/guamoko995/expr-cls/env"
+	basepkg "github.com/guamoko995/expr-cls/env/base"
 	"github.com/guamoko995/expr-cls/file"
-	"github.com/guamoko995/expr-cls/internal/hash"
+	"github.com/guamoko995/expr-cls/internal/hashsum"
 )
 
 // Node represents items of abstract syntax tree.
@@ -18,7 +18,7 @@ type Node interface {
 	SetLocation(file.Location)
 	String() string
 	IsConstant() bool
-	Build(env *env.Env, varSrc any) (basepkg.GenericLazyFunc, error)
+	Build(env *env.Enviroment, varSrc any) (basepkg.GenericLazyFunc, error)
 }
 
 // Patch replaces the node with a new one.
@@ -49,7 +49,7 @@ func (n *base) SetLocation(loc file.Location) {
 	n.loc = loc
 }
 
-func (n *base) Build(env *env.Env, varSrc any) (basepkg.GenericLazyFunc, error) {
+func (n *base) Build(env *env.Enviroment, varSrc any) (basepkg.GenericLazyFunc, error) {
 	return nil, errors.New("not emplemented")
 }
 
@@ -64,13 +64,13 @@ type IdentifierNode struct {
 	Value string // Name of the identifier. Like "foo" in "foo.bar".
 }
 
-func (n *IdentifierNode) Build(env *env.Env, varSrc any) (basepkg.GenericLazyFunc, error) {
+func (n *IdentifierNode) Build(env *env.Enviroment, varSrc any) (basepkg.GenericLazyFunc, error) {
 	srcTR := reflect.TypeOf(varSrc).Elem()
-	builder, exist := env.VarBuilders[srcTR][n.Value]
+	builder, exist := env.Variables[srcTR][n.Value]
 	if !exist {
 		return nil, fmt.Errorf("identifier %q not found", n.Value)
 	}
-	return builder.Build([]any{unsafe.Pointer(reflect.ValueOf(varSrc).Pointer())}), nil
+	return builder.Build([]basepkg.GenericLazyFunc{unsafe.Pointer(reflect.ValueOf(varSrc).Pointer())}), nil
 
 }
 
@@ -80,7 +80,7 @@ type IntegerNode struct {
 	Value int // Value of the integer.
 }
 
-func (n *IntegerNode) Build(env *env.Env, varSrc any) (basepkg.GenericLazyFunc, error) {
+func (n *IntegerNode) Build(env *env.Enviroment, varSrc any) (basepkg.GenericLazyFunc, error) {
 	n.isConst = true
 	return basepkg.LazyFunc[int](func() int { return n.Value }), nil
 }
@@ -91,7 +91,7 @@ type FloatNode struct {
 	Value float64 // Value of the float.
 }
 
-func (n *FloatNode) Build(env *env.Env, varSrc any) (basepkg.GenericLazyFunc, error) {
+func (n *FloatNode) Build(env *env.Enviroment, varSrc any) (basepkg.GenericLazyFunc, error) {
 	n.isConst = true
 	return basepkg.LazyFunc[float64](func() float64 { return n.Value }), nil
 }
@@ -102,7 +102,7 @@ type BoolNode struct {
 	Value bool // Value of the boolean.
 }
 
-func (n *BoolNode) Build(env *env.Env, varSrc any) (basepkg.GenericLazyFunc, error) {
+func (n *BoolNode) Build(env *env.Enviroment, varSrc any) (basepkg.GenericLazyFunc, error) {
 	n.isConst = true
 	return basepkg.LazyFunc[bool](func() bool { return n.Value }), nil
 }
@@ -113,7 +113,7 @@ type StringNode struct {
 	Value string // Value of the string.
 }
 
-func (n *StringNode) Build(env *env.Env, varSrc any) (basepkg.GenericLazyFunc, error) {
+func (n *StringNode) Build(env *env.Enviroment, varSrc any) (basepkg.GenericLazyFunc, error) {
 	n.isConst = true
 	return basepkg.LazyFunc[string](func() string { return n.Value }), nil
 }
@@ -134,31 +134,31 @@ type UnaryNode struct {
 	Node     Node   // Node of the unary operator. Like "foo" in "!foo".
 }
 
-func (n *UnaryNode) Build(env *env.Env, varSrc any) (basepkg.GenericLazyFunc, error) {
+func (n *UnaryNode) Build(env *env.Enviroment, varSrc any) (basepkg.GenericLazyFunc, error) {
 	n.isConst = n.Node.IsConstant()
 	arg1, err := n.Node.Build(env, varSrc)
 	if err != nil {
 		return nil, err
 	}
 
-	if _, exist := env.UnaryBuilders[n.Operator]; !exist {
+	if _, exist := env.Unary[n.Operator]; !exist {
 		return nil, fmt.Errorf("environment does not contain any implementations of the %q operator", n.Operator)
 	}
 
-	argsHash := hash.HashArgs(reflect.TypeOf(arg1).Out(0))
+	argsHash := hashsum.HashArgs(reflect.TypeOf(arg1).Out(0))
 
-	fn, exist := env.UnaryBuilders[n.Operator][argsHash]
+	fn, exist := env.Unary[n.Operator][argsHash]
 	if !exist {
 		return nil, fmt.Errorf("environment does not contain implementations of the %q operator for the given arguments", n.Operator)
 	}
 
-	result := fn.Build([]any{arg1})
+	result := fn.Build([]basepkg.GenericLazyFunc{arg1})
 
 	if n.IsConstant() {
 		result := reflect.ValueOf(result).Call([]reflect.Value{})[0].Interface()
 		resultTR := reflect.TypeOf(result)
 
-		if builderMaker, exist := env.BuilderMakers[resultTR]; exist {
+		if builderMaker, exist := env.VariableMakers[resultTR]; exist {
 			return builderMaker.MakeConstBuilder(result), nil
 		}
 	}
@@ -174,7 +174,7 @@ type BinaryNode struct {
 	Right    Node   // Right node of the binary operator.
 }
 
-func (n *BinaryNode) Build(env *env.Env, varSrc any) (basepkg.GenericLazyFunc, error) {
+func (n *BinaryNode) Build(env *env.Enviroment, varSrc any) (basepkg.GenericLazyFunc, error) {
 	n.isConst = n.Right.IsConstant() && n.Left.IsConstant()
 
 	arg1, err := n.Left.Build(env, varSrc)
@@ -187,24 +187,24 @@ func (n *BinaryNode) Build(env *env.Env, varSrc any) (basepkg.GenericLazyFunc, e
 		return nil, err
 	}
 
-	if _, exist := env.BinaryBuilders[n.Operator]; !exist {
+	if _, exist := env.Binary[n.Operator]; !exist {
 		return nil, fmt.Errorf("environment does not contain any implementations of the %q operator", n.Operator)
 	}
 
-	argsHash := hash.HashArgs(reflect.TypeOf(arg1).Out(0), reflect.TypeOf(arg2).Out(0))
+	argsHash := hashsum.HashArgs(reflect.TypeOf(arg1).Out(0), reflect.TypeOf(arg2).Out(0))
 
-	fn, exist := env.BinaryBuilders[n.Operator][argsHash]
+	fn, exist := env.Binary[n.Operator][argsHash]
 	if !exist {
 		return nil, fmt.Errorf("environment does not contain implementations of the %q operator for the given arguments", n.Operator)
 	}
 
-	result := fn.Build([]any{arg1, arg2})
+	result := fn.Build([]basepkg.GenericLazyFunc{arg1, arg2})
 
 	if n.IsConstant() {
 		result := reflect.ValueOf(result).Call([]reflect.Value{})[0].Interface()
 		resultTR := reflect.TypeOf(result)
 
-		if builderMaker, exist := env.BuilderMakers[resultTR]; exist {
+		if builderMaker, exist := env.VariableMakers[resultTR]; exist {
 			return builderMaker.MakeConstBuilder(result), nil
 		}
 	}

@@ -1,7 +1,7 @@
 package conf
 
 import (
-	buildEnv "github.com/guamoko995/expr-cls/builder/env"
+	buildEnv "github.com/guamoko995/expr-cls/env"
 )
 
 var (
@@ -10,19 +10,19 @@ var (
 )
 
 type Config struct {
-	BuildStageEnvironment *buildEnv.Env
+	BuildStageEnvironment *buildEnv.Enviroment
 	MaxNodes              uint
 }
 
 // New creates new config with default values.
 func New() *Config {
 	c := &Config{
-		BuildStageEnvironment: buildEnv.Global,
+		BuildStageEnvironment: buildEnv.DefaultEnv,
 		MaxNodes:              DefaultMaxNodes,
 	}
 	return c
 }
 
-func (c *Config) WithEnv(buildStageEnv *buildEnv.Env) {
+func (c *Config) WithEnv(buildStageEnv *buildEnv.Enviroment) {
 	c.BuildStageEnvironment = buildStageEnv
 }

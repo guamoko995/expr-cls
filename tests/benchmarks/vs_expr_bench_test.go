@@ -6,19 +6,50 @@ import (
 
 	"github.com/expr-lang/expr"
 	exprcls "github.com/guamoko995/expr-cls"
+
+	// Использовать среду из примера
+	_ "github.com/guamoko995/expr-cls/tests/example/def_env"
 	"github.com/stretchr/testify/require"
 )
 
-// Benchmark compares performance of two approaches for expression calculation:
-// 1. Using expr-cls: full-featured expression compilation from string to Go function (MVP build).
-// 2. Compiling expressions using the third-party library github.com/expr-lang/expr.
-func Benchmark(b *testing.B) {
+// The test compares the performance of two approaches to expression compilation:
+// 1. Using github.com/guamoko995/expr-cls.
+// 2. Using github.com/expr-lang/expr.
+func BenchmarkCompile(b *testing.B) {
 	type input struct {
 		X float64
 		Y float64
 	}
 
-	exprcls.RegisterSource[input]()
+	// Expression to be evaluated using both approaches.
+	testExpressionStr := "X+(6*Y)"
+
+	// Benchmark the expr-cls.
+	b.Run("expr-cls", func(b *testing.B) {
+		for b.Loop() {
+			// Compile the expression string into a callable Go function with expr-cls.
+			exprcls.Compile[input, float64](testExpressionStr)
+		}
+	})
+
+	// Benchmark the expr.
+	b.Run("expr", func(b *testing.B) {
+		for b.Loop() {
+			// Compile the same expression using the external library github.com/expr-lang/expr.
+			expr.Compile(testExpressionStr, expr.AsFloat64(), expr.Env(input{}))
+		}
+	})
+
+}
+
+// The test compares the performance of two approaches to expression calculation:
+// 1. Using github.com/guamoko995/expr-cls.
+// 2. Using github.com/expr-lang/expr.
+func BenchmarkСalc(b *testing.B) {
+	type input struct {
+		X float64
+		Y float64
+	}
 
 	// Expression to be evaluated using both approaches.
 	testExpressionStr := "X+(6*Y)"
@@ -32,6 +63,7 @@ func Benchmark(b *testing.B) {
 	require.Nil(b, err)
 
 	testExpressionParams := input{X: 3, Y: 5}
+
 	// Ensure both methods yield the same result.
 	val, _ := expr.Run(exprProg, testExpressionParams)
 	require.Equal(b, exprClsProg(testExpressionParams), val)
@@ -42,14 +74,14 @@ func Benchmark(b *testing.B) {
 	fmt.Printf("expr-cls result: %v\n", exprClsProg(testExpressionParams))
 	fmt.Printf("expr result: %v\n\n", val)
 
-	// Benchmark the expr-cls MVP build.
+	// Benchmark the expr-cls.
 	b.Run("expr-cls", func(b *testing.B) {
 		for b.Loop() {
 			exprClsProg(testExpressionParams)
 		}
 	})
 
-	// Benchmark the external library's compilation approach.
+	// Benchmark the expr.
 	b.Run("expr", func(b *testing.B) {
 		for b.Loop() {
 			expr.Run(exprProg, testExpressionParams)
