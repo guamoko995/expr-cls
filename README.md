@@ -98,10 +98,11 @@ goos: linux
 goarch: amd64
 pkg: github.com/guamoko995/expr-cls/tests/benchmarks
 cpu: AMD Ryzen 5 5600H with Radeon Graphics         
-BenchmarkCompile/expr-cls-12         	  644955	      1730 ns/op	    1344 B/op	      31 allocs/op
-BenchmarkCompile/expr-12             	  110992	     10489 ns/op	   10342 B/op	      75 allocs/op
+BenchmarkCompile/expr-cls-12         	  661381	      1802 ns/op	    1344 B/op	      31 allocs/op
+BenchmarkCompile/expr-12             	  107227	     10928 ns/op	   10351 B/op	      76 allocs/op
+BenchmarkCompile/cel-go-12           	   33639	     36255 ns/op	   24404 B/op	     355 allocs/op
 PASS
-ok  	github.com/guamoko995/expr-cls/tests/benchmarks	2.285s
+ok  	github.com/guamoko995/expr-cls/tests/benchmarks	3.591s
 ```
 **expr-cls compiles more than 6x faster and with 8x less memory allocation than expr-lang/expr.**
 
@@ -112,21 +113,23 @@ ok  	github.com/guamoko995/expr-cls/tests/benchmarks	2.285s
 Measures the time and resource usage to repeatedly evaluate a compiled expression ([benchmark code](https://github.com/guamoko995/expr-cls/tree/master/tests/benchmarks)):
 
 ```
-expression: "X+(6*Y)"
+expression: "X+(6.0*Y)"
 params:
 	X=3
 	Y=5
 expr-cls result: 33
 expr result: 33
+cel-go result: 33
 
 goos: linux
 goarch: amd64
 pkg: github.com/guamoko995/expr-cls/tests/benchmarks
 cpu: AMD Ryzen 5 5600H with Radeon Graphics         
-BenchmarkСalc/expr-cls-12          	134900941	         8.885 ns/op	       0 B/op	       0 allocs/op
-BenchmarkСalc/expr-12              	 7426069	       162.8 ns/op	     136 B/op	       6 allocs/op
+BenchmarkСalc/expr-cls-12          	132511530	         9.015 ns/op	       0 B/op	       0 allocs/op
+BenchmarkСalc/expr-12              	 6529965	       172.0 ns/op	     136 B/op	       6 allocs/op
+BenchmarkСalc/cel-go-12            	 4484371	       267.9 ns/op	     368 B/op	       6 allocs/op
 PASS
-ok  	github.com/guamoko995/expr-cls/tests/benchmarks	2.413s
+ok  	github.com/guamoko995/expr-cls/tests/benchmarks	3.529s
 ```
 **expr-cls evaluates expressions ~18x faster and with zero allocations.**
 
