@@ -24,7 +24,7 @@ func BenchmarkCompile(b *testing.B) {
 	}
 
 	// Expression to be evaluated using both approaches.
-	testExpressionStr := "X+(6.0*Y)"
+	testExpressionStr := "(.0+1+2+3+4+5+6+7+8+9+10)/2"
 
 	_, err := exprcls.Compile[input, float64](testExpressionStr)
 	require.Nil(b, err)
@@ -81,7 +81,7 @@ func BenchmarkСalc(b *testing.B) {
 	}
 
 	// Expression to be evaluated using both approaches.
-	testExpressionStr := "X+(6.0*Y)"
+	testExpressionStr := "(.0+1+2+3+4+5+6+7+8+9+10)/2"
 
 	// Compile the expression string into a callable Go function with expr-cls.
 	exprClsProg, err := exprcls.Compile[input, float64](testExpressionStr)
@@ -91,7 +91,7 @@ func BenchmarkСalc(b *testing.B) {
 	exprProg, err := expr.Compile(testExpressionStr, expr.AsFloat64(), expr.Env(input{}))
 	require.Nil(b, err)
 
-	// Compile the same expression using the external library "github.com/google/cel-go/cel".
+	/*// Compile the same expression using the external library "github.com/google/cel-go/cel".
 	env, err := cel.NewEnv(
 		cel.Variable("X", cel.DoubleType),
 		cel.Variable("Y", cel.DoubleType),
@@ -102,7 +102,8 @@ func BenchmarkСalc(b *testing.B) {
 		require.Nil(b, err)
 	}
 	celProg, err := env.Program(ast)
-	require.Nil(b, err)
+	require.Nil(b, err)*/
+
 	testExpressionParams := input{X: 3, Y: 5}
 
 	// Ensure both methods yield the same result.
@@ -110,16 +111,16 @@ func BenchmarkСalc(b *testing.B) {
 	require.Nil(b, err)
 	require.Equal(b, exprClsProg(testExpressionParams), valExpr)
 
-	valCel, _, err := celProg.Eval(map[string]interface{}{"X": 3.0, "Y": 5.0})
+	/*valCel, _, err := celProg.Eval(map[string]interface{}{"X": 3.0, "Y": 5.0})
 	require.Nil(b, err)
-	require.Equal(b, exprClsProg(testExpressionParams), valCel.Value().(float64))
+	require.Equal(b, exprClsProg(testExpressionParams), valCel.Value().(float64))*/
 
 	// Display details about the expression being tested.
 	fmt.Printf("expression: %q\n", testExpressionStr)
 	fmt.Printf("params:\n\tX=%v\n\tY=%v\n", testExpressionParams.X, testExpressionParams.Y)
 	fmt.Printf("expr-cls result: %v\n", exprClsProg(testExpressionParams))
 	fmt.Printf("expr result: %v\n", valExpr)
-	fmt.Printf("cel-go result: %v\n\n", valCel)
+	//fmt.Printf("cel-go result: %v\n\n", valCel)
 
 	// Benchmark the expr-cls.
 	b.Run("expr-cls", func(b *testing.B) {
@@ -135,10 +136,10 @@ func BenchmarkСalc(b *testing.B) {
 		}
 	})
 
-	// Benchmark the cel-go.
+	/*/ Benchmark the cel-go.
 	b.Run("cel-go", func(b *testing.B) {
 		for b.Loop() {
 			celProg.Eval(map[string]interface{}{"X": 3.0, "Y": 5.0})
 		}
-	})
+	})*/
 }

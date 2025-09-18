@@ -140,11 +140,11 @@ type UnaryNode struct {
 }
 
 func (n *UnaryNode) Build(env *env.Enviroment, varSrc any) (basepkg.GenericLazyFunc, error) {
-	n.isConst = n.Node.IsConstant()
 	arg1, err := n.Node.Build(env, varSrc)
 	if err != nil {
 		return nil, err
 	}
+	n.isConst = n.Node.IsConstant()
 
 	if _, exist := env.Unary[n.Operator]; !exist {
 		return nil, fmt.Errorf("environment does not contain any implementations of the %q operator", n.Operator)
@@ -164,7 +164,7 @@ func (n *UnaryNode) Build(env *env.Enviroment, varSrc any) (basepkg.GenericLazyF
 		resultTR := reflect.TypeOf(result)
 
 		if builderMaker, exist := env.VariableMakers[resultTR]; exist {
-			return builderMaker.MakeConstBuilder(result), nil
+			return builderMaker.MakeConstBuilder(result).Build(nil), nil
 		}
 	}
 
@@ -180,7 +180,6 @@ type BinaryNode struct {
 }
 
 func (n *BinaryNode) Build(env *env.Enviroment, varSrc any) (basepkg.GenericLazyFunc, error) {
-	n.isConst = n.Right.IsConstant() && n.Left.IsConstant()
 
 	arg1, err := n.Left.Build(env, varSrc)
 	if err != nil {
@@ -191,6 +190,8 @@ func (n *BinaryNode) Build(env *env.Enviroment, varSrc any) (basepkg.GenericLazy
 	if err != nil {
 		return nil, err
 	}
+
+	n.isConst = n.Right.IsConstant() && n.Left.IsConstant()
 
 	if _, exist := env.Binary[n.Operator]; !exist {
 		return nil, fmt.Errorf("environment does not contain any implementations of the %q operator", n.Operator)
@@ -210,7 +211,7 @@ func (n *BinaryNode) Build(env *env.Enviroment, varSrc any) (basepkg.GenericLazy
 		resultTR := reflect.TypeOf(result)
 
 		if builderMaker, exist := env.VariableMakers[resultTR]; exist {
-			return builderMaker.MakeConstBuilder(result), nil
+			return builderMaker.MakeConstBuilder(result).Build(nil), nil
 		}
 	}
 
@@ -278,13 +279,13 @@ func (n *CallNode) Build(env *env.Enviroment, varSrc any) (basepkg.GenericLazyFu
 	argTypes := make([]reflect.Type, len(n.Arguments))
 	n.isConst = true
 	for i := range len(n.Arguments) {
-		if !n.Arguments[i].IsConstant() {
-			n.isConst = false
-		}
 		var err error
 		args[i], err = n.Arguments[i].Build(env, varSrc)
 		if err != nil {
 			return nil, err
+		}
+		if !n.Arguments[i].IsConstant() {
+			n.isConst = false
 		}
 		argTypes[i] = reflect.TypeOf(args[i]).Out(0)
 	}
@@ -301,7 +302,7 @@ func (n *CallNode) Build(env *env.Enviroment, varSrc any) (basepkg.GenericLazyFu
 		resultTR := reflect.TypeOf(result)
 
 		if builderMaker, exist := env.VariableMakers[resultTR]; exist {
-			return builderMaker.MakeConstBuilder(result), nil
+			return builderMaker.MakeConstBuilder(result).Build(nil), nil
 		}
 	}
 
